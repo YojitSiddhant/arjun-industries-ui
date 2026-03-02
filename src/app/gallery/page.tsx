@@ -152,7 +152,7 @@ export default function GalleryPage() {
       <section className="py-12">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="animate-fade-in space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
               Gallery
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -176,8 +176,8 @@ export default function GalleryPage() {
                 onClick={() => setActiveFilter(filter)}
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
                   activeFilter === filter
-                    ? "border-amber-300 bg-amber-50 text-amber-700"
-                    : "border-slate-200 text-slate-600 hover:border-amber-300 hover:text-amber-700"
+                    ? "border-sky-300 bg-sky-50 text-sky-700"
+                    : "border-slate-200 text-slate-600 hover:border-sky-300 hover:text-sky-700"
                 }`}
               >
                 {filterIcons[filter]}
@@ -190,7 +190,7 @@ export default function GalleryPage() {
             {visibleItems.map((item) => (
               <div
                 key={item.title}
-                className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-amber-300 hover:shadow-md"
+                className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
                   <Image
@@ -202,7 +202,7 @@ export default function GalleryPage() {
                   />
                 </div>
                 <div className="mt-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">
                     {item.category}
                   </p>
                   <p className="mt-2 text-sm font-semibold text-slate-800">

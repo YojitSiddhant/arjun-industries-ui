@@ -67,7 +67,7 @@ export default function HeroSlider() {
               <div className="flex flex-wrap gap-3 pt-2">
                 <a
                   href="tel:09893031717"
-                  className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-amber-600 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
                 >
                   <FiPhone className="h-4 w-4" />
                   Call Now
@@ -110,7 +110,7 @@ export default function HeroSlider() {
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2.5 w-2.5 rounded-full transition ${
                 index === activeIndex
-                  ? "bg-amber-400"
+                  ? "bg-sky-400"
                   : "bg-white/60 hover:bg-white"
               }`}
             />

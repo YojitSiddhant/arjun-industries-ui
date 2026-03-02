@@ -38,7 +38,7 @@ export default function HighlightSlider() {
 
   return (
     <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:shadow-md">
-      <span className="inline-flex rounded-full border border-amber-300/60 bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-amber-700">
+      <span className="inline-flex rounded-full border border-sky-300/60 bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-sky-700">
         Key Highlights
       </span>
       <div className="mt-4">
@@ -57,7 +57,7 @@ export default function HighlightSlider() {
             onClick={() => setActiveIndex(index)}
             className={`h-2.5 w-2.5 rounded-full transition ${
               index === activeIndex
-                ? "bg-amber-500"
+                ? "bg-sky-500"
                 : "bg-slate-300 hover:bg-slate-400"
             }`}
             aria-label={`Go to highlight ${index + 1}`}

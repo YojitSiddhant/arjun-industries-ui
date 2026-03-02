@@ -11,7 +11,7 @@ export default function ContactPage() {
       <section className="py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
               CONTACT
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -28,7 +28,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
                 <FiPhone className="h-5 w-5" />
                 Phone
               </p>
@@ -37,7 +37,7 @@ export default function ContactPage() {
               </p>
               <a
                 href="tel:+919893031717"
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-amber-600 hover:-translate-y-0.5"
+                className="mt-5 inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
               >
                 <FiPhone className="h-5 w-5" />
                 Call Now
@@ -64,7 +64,7 @@ export default function ContactPage() {
             </div>
 
             <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
                 <FiMapPin className="h-5 w-5" />
                 Workshop
               </p>
@@ -97,7 +97,7 @@ export default function ContactPage() {
             <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
               <iframe
                 title="Arjun Industries map"
-                src="https://www.google.com/maps?q=Bhopal&z=14&output=embed"
+                src="https://www.google.com/maps?q=23.1481814,77.4799711&z=17&output=embed"
                 className="h-64 w-full md:h-80"
                 loading="lazy"
               />

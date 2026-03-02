@@ -27,9 +27,9 @@ export default function Navbar() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 text-base font-semibold text-slate-800 transition hover:text-amber-600"
+          className="flex items-center gap-2 text-base font-semibold text-slate-800 transition hover:text-sky-600"
         >
-          <FiTool className="h-4 w-4 text-amber-600" />
+          <FiTool className="h-4 w-4 text-sky-600" />
           Arjun Industries
         </Link>
 
@@ -43,13 +43,13 @@ export default function Navbar() {
                 href={link.href}
                 className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-sm transition duration-200 ${
                   active
-                    ? "bg-amber-50 text-amber-700"
-                    : "text-slate-800 hover:bg-slate-50 hover:text-amber-600"
+                    ? "bg-sky-50 text-sky-700"
+                    : "text-slate-800 hover:bg-slate-50 hover:text-sky-600"
                 }`}
               >
                 <Icon
                   className={`h-4 w-4 ${
-                    active ? "text-amber-600" : "text-slate-500"
+                    active ? "text-sky-600" : "text-slate-500"
                   }`}
                 />
                 {link.label}
@@ -60,7 +60,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md border border-slate-200 p-2 text-slate-600 transition duration-200 hover:border-amber-300 hover:text-amber-600 md:hidden"
+          className="inline-flex items-center justify-center rounded-md border border-slate-200 p-2 text-slate-600 transition duration-200 hover:border-sky-300 hover:text-sky-600 md:hidden"
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((prev) => !prev)}
         >
@@ -83,14 +83,14 @@ export default function Navbar() {
                 href={link.href}
                 className={`flex items-center gap-2 rounded-md px-2 py-2 text-sm transition duration-200 ${
                   active
-                    ? "bg-amber-50 text-amber-700"
-                    : "text-slate-800 hover:bg-slate-50 hover:text-amber-600"
+                    ? "bg-sky-50 text-sky-700"
+                    : "text-slate-800 hover:bg-slate-50 hover:text-sky-600"
                 }`}
                 onClick={() => setMenuOpen(false)}
               >
                 <Icon
                   className={`h-4 w-4 ${
-                    active ? "text-amber-600" : "text-slate-500"
+                    active ? "text-sky-600" : "text-slate-500"
                   }`}
                 />
                 {link.label}

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import HeroSlider from "@/components/HeroSlider";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import { FiAward, FiBriefcase, FiMapPin, FiUsers } from "react-icons/fi";
 
 const quickStats = [
   {
@@ -98,6 +99,50 @@ const coverageAreas = [
   "Nearby rural areas",
 ];
 
+const testimonials = [
+  {
+    name: "Rahul Verma",
+    role: "Warehouse Owner, Bhopal",
+    quote:
+      "Strong fabrication work and clean finishing. The shed was delivered on time and the team handled everything smoothly.",
+  },
+  {
+    name: "Suman Yadav",
+    role: "Farm Equipment Buyer",
+    quote:
+      "Good quality trolley build and quick support for minor adjustments. Very reliable service.",
+  },
+  {
+    name: "Vikram Patel",
+    role: "Residential Client",
+    quote:
+      "Gate and grill work was sturdy and looks premium. Clear communication and fast installation.",
+  },
+];
+
+const stats = [
+  {
+    value: "10+",
+    label: "Years of Experience",
+    icon: FiAward,
+  },
+  {
+    value: "500+",
+    label: "Projects Completed",
+    icon: FiBriefcase,
+  },
+  {
+    value: "15+",
+    label: "Cities Served",
+    icon: FiMapPin,
+  },
+  {
+    value: "300+",
+    label: "Happy Clients",
+    icon: FiUsers,
+  },
+];
+
 export default function Home() {
   return (
     <main className="bg-slate-50 text-slate-800">
@@ -109,7 +154,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.3fr,1fr]">
             <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
                 Welding, Metal and Fabrication Specialist
               </span>
               <h1 className="mt-3 text-2xl font-semibold text-slate-800 sm:text-3xl">
@@ -124,7 +169,7 @@ export default function Home() {
               <div className="mt-5 flex flex-wrap gap-3">
                 <a
                   href="tel:09893031717"
-                  className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-amber-600 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
                 >
                   <FiPhone className="h-4 w-4" />
                   Call Now
@@ -145,8 +190,8 @@ export default function Home() {
                   key={item.title}
                   className="animate-fade-up rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
                 >
-                  <div className="flex items-center gap-3 text-amber-600">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-amber-200 bg-amber-50">
+                  <div className="flex items-center gap-3 text-sky-600">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-sky-200 bg-sky-50">
                       {item.icon}
                     </span>
                     <h3 className="text-base font-semibold text-slate-800">
@@ -167,7 +212,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
             <div className="flex flex-col gap-3">
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
                 What we fabricate
               </span>
               <h2 className="text-2xl font-semibold text-slate-800">
@@ -178,9 +223,9 @@ export default function Home() {
               {servicesTeaser.map((service) => (
                 <div
                   key={service.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-amber-300 hover:shadow-md"
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
                 >
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">
                     {service.label}
                   </p>
                   <h3 className="mt-3 text-lg font-semibold text-slate-800">
@@ -202,7 +247,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="animate-fade-up rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-600">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-sky-200 bg-sky-50 text-sky-600">
                 <svg
                   className="h-5 w-5"
                   viewBox="0 0 24 24"
@@ -230,7 +275,7 @@ export default function Home() {
               {coverageAreas.map((area) => (
                 <span
                   key={area}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 transition duration-200 hover:border-amber-300 hover:text-amber-700"
+                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 transition duration-200 hover:border-sky-300 hover:text-sky-700"
                 >
                   {area}
                 </span>
@@ -240,10 +285,65 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="py-12">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.label}
+                  className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-2 hover:border-sky-300 hover:shadow-md"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-50 text-sky-600">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <p className="mt-4 text-2xl font-semibold text-slate-800">
+                    {item.value}
+                  </p>
+                  <p className="text-sm text-slate-600">{item.label}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="flex flex-col gap-3">
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+                Testimonials
+              </span>
+              <h2 className="text-2xl font-semibold text-slate-800">
+                What clients say about our work
+              </h2>
+            </div>
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {testimonials.map((item) => (
+                <div
+                  key={item.name}
+                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
+                >
+                  <p className="text-sm text-slate-600">"{item.quote}"</p>
+                  <div className="mt-4">
+                    <p className="text-sm font-semibold text-slate-800">
+                      {item.name}
+                    </p>
+                    <p className="text-xs text-slate-500">{item.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-gradient-to-r from-slate-50 via-white to-slate-50">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
               Ready to start?
             </span>
             <p className="text-lg font-semibold text-slate-800">
@@ -253,7 +353,7 @@ export default function Home() {
           <div className="flex flex-wrap gap-3">
             <a
               href="tel:09893031717"
-              className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-amber-600 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
             >
               <FiPhone className="h-4 w-4" />
               Call

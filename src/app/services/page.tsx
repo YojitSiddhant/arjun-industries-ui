@@ -138,7 +138,7 @@ export default function ServicesPage() {
       <section className="py-12">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="animate-fade-in space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amber-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
               Services
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -158,13 +158,13 @@ export default function ServicesPage() {
             {services.map((service) => (
               <div
                 key={service.title}
-                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-amber-300 hover:shadow-md"
+                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
               >
-                <div className="flex items-center gap-3 text-amber-600">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-amber-200 bg-amber-50">
+                <div className="flex items-center gap-3 text-sky-600">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-sky-200 bg-sky-50">
                     {service.icon}
                   </span>
-                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-600">
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-600">
                     {service.category}
                   </p>
                 </div>
@@ -191,7 +191,7 @@ export default function ServicesPage() {
             <div className="flex flex-wrap gap-3">
               <a
                 href="tel:09893031717"
-                className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-amber-600 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
               >
                 <FiPhone className="h-4 w-4" />
                 Call
