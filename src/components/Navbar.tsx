@@ -13,7 +13,7 @@ const navLinks = [
   { href: "/contact", label: "Contact", icon: FiPhone },
 ];
 
-export default function Navbar() {
+export default function Navbar({ businessName }: { businessName: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
@@ -23,14 +23,14 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="w-full border-b border-slate-200 bg-white text-slate-800 shadow-sm">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 text-slate-800 shadow-sm backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
           className="flex items-center gap-2 text-base font-semibold text-slate-800 transition hover:text-sky-600"
         >
           <FiTool className="h-4 w-4 text-sky-600" />
-          Arjun Industries
+          {businessName}
         </Link>
 
         <div className="hidden items-center gap-6 md:flex">

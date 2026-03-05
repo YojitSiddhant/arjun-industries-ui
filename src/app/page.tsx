@@ -4,195 +4,110 @@ import HeroSlider from "@/components/HeroSlider";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiAward, FiBriefcase, FiMapPin, FiUsers } from "react-icons/fi";
+import { getContent } from "@/lib/content";
+import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
-const quickStats = [
-  {
-    title: "On-site measurement",
-    description: "Accurate measurements and installation support.",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M3 7h18" />
-        <path d="M7 7v10" />
-        <path d="M12 7v6" />
-        <path d="M17 7v8" />
-      </svg>
-    ),
-  },
-  {
-    title: "Heavy MS sections",
-    description: "Strong frames with clean finishing.",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <rect x="3" y="4" width="18" height="16" rx="2" />
-        <path d="M7 4v16" />
-        <path d="M17 4v16" />
-      </svg>
-    ),
-  },
-  {
-    title: "Repair and upgrade",
-    description: "Fast modifications and reinforcement.",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M14 6l4 4-9 9H5v-4l9-9z" />
-        <path d="M16 4l4 4" />
-      </svg>
-    ),
-  },
+const quickStatIcons = [
+  <svg
+    key="quick-1"
+    className="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M3 7h18" />
+    <path d="M7 7v10" />
+    <path d="M12 7v6" />
+    <path d="M17 7v8" />
+  </svg>,
+  <svg
+    key="quick-2"
+    className="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M7 4v16" />
+    <path d="M17 4v16" />
+  </svg>,
+  <svg
+    key="quick-3"
+    className="h-5 w-5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M14 6l4 4-9 9H5v-4l9-9z" />
+    <path d="M16 4l4 4" />
+  </svg>,
 ];
 
-const servicesTeaser = [
-  {
-    label: "Structures",
-    title: "Sheds and structures",
-    points: ["MS industrial sheds", "Warehouse and workshop fabrication"],
-  },
-  {
-    label: "Gates",
-    title: "Gates and grills",
-    points: ["Main gates and railings", "Custom grills and windows"],
-  },
-  {
-    label: "Farm",
-    title: "Farm equipment",
-    points: ["Tractor trolleys", "Water tankers and cultivators"],
-  },
-  {
-    label: "Support",
-    title: "Repair and custom work",
-    points: ["On-site welding", "Reinforcement and modifications"],
-  },
-];
+const statIcons = [FiAward, FiBriefcase, FiMapPin, FiUsers];
 
-const coverageAreas = [
-  "Bhopal",
-  "Sehore",
-  "Raisen",
-  "Hoshangabad (Narmadapuram)",
-  "Nearby rural areas",
-];
+export default async function Home() {
+  const content = await getContent();
+  const phoneHref = toPhoneHref(content.contact.phone);
+  const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
 
-const testimonials = [
-  {
-    name: "Rahul Verma",
-    role: "Warehouse Owner, Bhopal",
-    quote:
-      "Strong fabrication work and clean finishing. The shed was delivered on time and the team handled everything smoothly.",
-  },
-  {
-    name: "Suman Yadav",
-    role: "Farm Equipment Buyer",
-    quote:
-      "Good quality trolley build and quick support for minor adjustments. Very reliable service.",
-  },
-  {
-    name: "Vikram Patel",
-    role: "Residential Client",
-    quote:
-      "Gate and grill work was sturdy and looks premium. Clear communication and fast installation.",
-  },
-];
-
-const stats = [
-  {
-    value: "10+",
-    label: "Years of Experience",
-    icon: FiAward,
-  },
-  {
-    value: "500+",
-    label: "Projects Completed",
-    icon: FiBriefcase,
-  },
-  {
-    value: "15+",
-    label: "Cities Served",
-    icon: FiMapPin,
-  },
-  {
-    value: "300+",
-    label: "Happy Clients",
-    icon: FiUsers,
-  },
-];
-
-export default function Home() {
   return (
     <main className="bg-slate-50 text-slate-800">
-      <Navbar />
+      <Navbar businessName={content.globals.businessName} />
 
-      <HeroSlider />
+      <HeroSlider hero={content.home.hero} contact={content.contact} />
 
       <section className="py-12">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.3fr,1fr]">
             <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
-                Welding, Metal and Fabrication Specialist
+                {content.home.intro.eyebrow}
               </span>
               <h1 className="mt-3 text-2xl font-semibold text-slate-800 sm:text-3xl">
-                Heavy-duty fabrication for sheds, gates, and farm equipment
+                {content.home.intro.title}
               </h1>
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
-                Arjun Industries delivers precision fabrication for industrial,
-                residential, and agricultural needs. From warehouse sheds to
-                custom gates and farm machinery, we build durable structures
-                that last.
+                {content.home.intro.subtitle}
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <a
-                  href="tel:09893031717"
+                  href={phoneHref}
                   className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
                 >
                   <FiPhone className="h-4 w-4" />
-                  Call Now
+                  {content.home.hero.ctaPhoneLabel}
                 </a>
                 <a
-                  href="https://wa.me/919893031717"
+                  href={whatsappHref}
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
                 >
                   <FaWhatsapp className="h-4 w-4" />
-                  WhatsApp Enquiry
+                  {content.home.hero.ctaWhatsappLabel}
                 </a>
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {quickStats.map((item) => (
+              {content.home.quickStats.map((item, index) => (
                 <div
                   key={item.title}
                   className="animate-fade-up rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"
                 >
                   <div className="flex items-center gap-3 text-sky-600">
                     <span className="flex h-9 w-9 items-center justify-center rounded-full border border-sky-200 bg-sky-50">
-                      {item.icon}
+                      {quickStatIcons[index] ?? quickStatIcons[0]}
                     </span>
                     <h3 className="text-base font-semibold text-slate-800">
                       {item.title}
@@ -220,7 +135,7 @@ export default function Home() {
               </h2>
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {servicesTeaser.map((service) => (
+              {content.home.servicesTeaser.map((service) => (
                 <div
                   key={service.title}
                   className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
@@ -264,20 +179,19 @@ export default function Home() {
                 </svg>
               </span>
               <h2 className="text-2xl font-semibold text-slate-800">
-                Areas we serve
-              </h2>
-            </div>
-            <p className="mt-3 text-sm text-slate-600">
-              Bhopal, Sehore, Raisen, Hoshangabad (Narmadapuram), nearby rural
-              areas.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              {coverageAreas.map((area) => (
-                <span
-                  key={area}
-                  className="rounded-full border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 transition duration-200 hover:border-sky-300 hover:text-sky-700"
-                >
-                  {area}
+              Areas we serve
+            </h2>
+          </div>
+          <p className="mt-3 text-sm text-slate-600">
+            {content.home.coverageAreas.join(", ")}.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {content.home.coverageAreas.map((area) => (
+              <span
+                key={area}
+                className="rounded-full border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 transition duration-200 hover:border-sky-300 hover:text-sky-700"
+              >
+                {area}
                 </span>
               ))}
             </div>
@@ -288,8 +202,8 @@ export default function Home() {
       <section className="py-12">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((item) => {
-              const Icon = item.icon;
+            {content.home.stats.map((item, index) => {
+              const Icon = statIcons[index] ?? FiAward;
               return (
                 <div
                   key={item.label}
@@ -320,13 +234,13 @@ export default function Home() {
                 What clients say about our work
               </h2>
             </div>
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              {testimonials.map((item) => (
+            <div className="mt-6 grid items-stretch gap-4 md:grid-cols-3">
+              {content.home.testimonials.map((item) => (
                 <div
                   key={item.name}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
+                  className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
                 >
-                  <p className="text-sm text-slate-600">"{item.quote}"</p>
+                  <p className="text-sm text-slate-600 flex-1">"{item.quote}"</p>
                   <div className="mt-4">
                     <p className="text-sm font-semibold text-slate-800">
                       {item.name}
@@ -347,19 +261,19 @@ export default function Home() {
               Ready to start?
             </span>
             <p className="text-lg font-semibold text-slate-800">
-              Share your measurements or photos on WhatsApp for a quick estimate.
+              {content.home.cta}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a
-              href="tel:09893031717"
+              href={phoneHref}
               className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
             >
               <FiPhone className="h-4 w-4" />
               Call
             </a>
             <a
-              href="https://wa.me/919893031717"
+              href={whatsappHref}
               className="inline-flex items-center gap-2 rounded-full border border-emerald-500 px-6 py-3 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
             >
               <FaWhatsapp className="h-4 w-4" />
@@ -369,7 +283,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
+      <Footer globals={content.globals} contact={content.contact} />
     </main>
   );
 }

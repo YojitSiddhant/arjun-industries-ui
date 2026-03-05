@@ -20,6 +20,19 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Admin Panel
+
+The site now includes a custom admin panel for content updates.
+
+1. Create `.env.local` and set:
+   - `ADMIN_PASSWORD=your-strong-password`
+   - `ADMIN_TOKEN=your-random-token`
+2. Run the dev server and open `http://localhost:3000/admin/login`.
+3. Update content and click "Save Changes".
+
+Content is stored in `data/siteContent.json`. The admin panel updates this file.
+Uploaded images are saved to `public/uploads` and can be selected from the admin panel.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

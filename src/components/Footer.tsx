@@ -1,28 +1,34 @@
 import Link from "next/link";
-import {
-  FiHome,
-  FiInfo,
-  FiLayers,
-  FiImage,
-  FiPhone,
-  FiMapPin,
-  FiClock,
-} from "react-icons/fi";
+import { FiHome, FiInfo, FiLayers, FiImage, FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import type { SiteContent } from "@/lib/content";
+import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
-export default function Footer() {
+type FooterProps = {
+  globals: SiteContent["globals"];
+  contact: SiteContent["contact"];
+};
+
+export default function Footer({ globals, contact }: FooterProps) {
+  const phoneHref = toPhoneHref(contact.phone);
+  const whatsappHref = toWhatsAppHref(contact.whatsapp);
+  const mapHref = `https://www.google.com/maps?q=${encodeURIComponent(
+    contact.address || `${contact.mapLat},${contact.mapLng}`
+  )}`;
+
   return (
     <footer className="mt-auto border-t border-slate-200 bg-slate-100 text-slate-800">
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="space-y-3">
-            <p className="text-base font-semibold text-slate-800">ARJUN INDUSTRIES</p>
+            <p className="text-base font-semibold text-slate-800">
+              {globals.businessName.toUpperCase()}
+            </p>
             <p className="text-sm text-slate-600">
-              Welding, Metal and Fabrication Specialist
+              {globals.tagline}
             </p>
             <p className="text-sm text-slate-600 leading-relaxed">
-              We deliver fabrication, welding, sheds, gates, and industrial metal
-              work with strong finishing and reliable service.
+              {globals.footerBlurb}
             </p>
           </div>
 
@@ -54,30 +60,37 @@ export default function Footer() {
 
           <div className="space-y-3">
             <p className="text-sm font-semibold text-slate-800">CONTACT</p>
-            <div className="flex flex-col gap-2 text-sm text-slate-600 leading-relaxed">
-              <div className="flex items-center gap-2">
-                <FiPhone className="h-5 w-5 text-slate-700" />
-                09893091717
-              </div>
-              <div className="flex items-center gap-2">
-                <FaWhatsapp className="h-5 w-5 text-slate-700" />
-                09893091717
-              </div>
-              <div className="flex items-center gap-2">
-                <FiMapPin className="h-5 w-5 scale-110 text-slate-700" />
-                Bhairopur, Narmadapuram Rd, in front of IPS School, Bhopal, Madhya Pradesh 462047
-              </div>
-              <div className="flex items-center gap-2">
-                <FiClock className="h-5 w-5 text-slate-700" />
-                10:00 AM - 7:00 PM
-              </div>
+            <div className="flex flex-col items-start gap-3">
+              <a
+                href={phoneHref}
+                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700"
+              >
+                <FiPhone className="h-4 w-4" />
+                Call
+              </a>
+              <a
+                href={whatsappHref}
+                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-semibold text-emerald-700 transition hover:border-emerald-300 hover:text-emerald-700"
+              >
+                <FaWhatsapp className="h-4 w-4" />
+                WhatsApp
+              </a>
+              <a
+                href={mapHref}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700"
+              >
+                <FiMapPin className="h-4 w-4" />
+                Location
+              </a>
             </div>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col gap-2 border-t border-slate-200 pt-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-          <p>(c) 2026 Arjun Industries. All rights reserved.</p>
-          <p>Welding, metal and fabrication services in Bhopal and nearby areas.</p>
+          <p>{globals.copyright}</p>
+          <p>{globals.footerNote}</p>
         </div>
       </div>
     </footer>

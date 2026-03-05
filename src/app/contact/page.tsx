@@ -2,11 +2,18 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import { getContent } from "@/lib/content";
+import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const content = await getContent();
+  const phoneHref = toPhoneHref(content.contact.phone);
+  const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
+  const mapUrl = `https://www.google.com/maps?q=${content.contact.mapLat},${content.contact.mapLng}&z=17&output=embed`;
+
   return (
     <main className="bg-slate-50 text-slate-800">
-      <Navbar />
+      <Navbar businessName={content.globals.businessName} />
 
       <section className="py-12">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -15,10 +22,10 @@ export default function ContactPage() {
               CONTACT
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
-              Contact Arjun Industries
+              {content.contact.title}
             </h1>
             <p className="text-sm text-slate-600 sm:text-base">
-              Call or WhatsApp for fabrication work, sheds, gates, and farm equipment.
+              {content.contact.subtitle}
             </p>
           </div>
         </div>
@@ -33,10 +40,10 @@ export default function ContactPage() {
                 Phone
               </p>
               <p className="mt-3 text-lg font-semibold text-slate-800">
-                +91 98930 31717
+                {content.contact.phone}
               </p>
               <a
-                href="tel:+919893031717"
+                href={phoneHref}
                 className="mt-5 inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
               >
                 <FiPhone className="h-5 w-5" />
@@ -50,10 +57,10 @@ export default function ContactPage() {
                 WhatsApp
               </p>
               <p className="mt-3 text-lg font-semibold text-slate-800">
-                +91 98930 31717
+                {content.contact.whatsapp}
               </p>
               <a
-                href="https://wa.me/919893031717"
+                href={whatsappHref}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
@@ -69,7 +76,7 @@ export default function ContactPage() {
                 Workshop
               </p>
               <p className="mt-3 text-sm text-slate-600">
-                Bhairopur, Narmadapuram Rd, in front of IPS School, Bhopal, Madhya Pradesh 462047
+                {content.contact.address}
               </p>
             </div>
           </div>
@@ -80,12 +87,11 @@ export default function ContactPage() {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
             <h2 className="text-lg font-semibold text-slate-800">Working hours</h2>
-            <p className="mt-3 text-sm text-slate-600">
-              Monday to Saturday: 9:30 AM - 7:30 PM
-            </p>
-            <p className="mt-2 text-sm text-slate-600">
-              Sunday: By appointment or urgent work
-            </p>
+            {content.contact.hours.map((line) => (
+              <p key={line} className="mt-2 text-sm text-slate-600">
+                {line}
+              </p>
+            ))}
           </div>
         </div>
       </section>
@@ -97,7 +103,7 @@ export default function ContactPage() {
             <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
               <iframe
                 title="Arjun Industries map"
-                src="https://www.google.com/maps?q=23.1481814,77.4799711&z=17&output=embed"
+                src={mapUrl}
                 className="h-64 w-full md:h-80"
                 loading="lazy"
               />
@@ -106,7 +112,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer globals={content.globals} contact={content.contact} />
     </main>
   );
 }

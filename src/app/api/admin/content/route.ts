@@ -1,0 +1,31 @@
+import { NextResponse } from "next/server";
+import { getAdminToken } from "@/lib/adminAuth";
+import { getContent, saveContent } from "@/lib/content";
+
+function isAuthorized(request: Request) {
+  const cookieHeader = request.headers.get("cookie") ?? "";
+  return cookieHeader.includes(`admin_token=${getAdminToken()}`);
+}
+
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
+  }
+
+  const content = await getContent();
+  return NextResponse.json(content);
+}
+
+export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
+  }
+
+  const body = await request.json().catch(() => null);
+  if (!body) {
+    return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
+  }
+
+  await saveContent(body);
+  return NextResponse.json({ ok: true });
+}

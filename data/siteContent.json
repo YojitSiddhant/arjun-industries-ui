@@ -1,0 +1,250 @@
+{
+  "globals": {
+    "businessName": "Arjun Industries",
+    "tagline": "Welding, Metal and Fabrication Specialist",
+    "footerBlurb": "We deliver fabrication, welding, sheds, gates, and industrial metal work with strong finishing and reliable service.",
+    "footerNote": "Welding, metal and fabrication services in Bhopal and nearby areas.",
+    "copyright": "(c) 2026 Arjun Industries. All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Welding, metal and fabrication specialist",
+      "title": "Heavy-duty fabrication for sheds, gates, and farm equipment",
+      "subtitle": "Arjun Industries delivers precision fabrication for industrial, residential, and agricultural needs with reliable finishing.",
+      "ctaPhoneLabel": "Call Now",
+      "ctaWhatsappLabel": "WhatsApp Enquiry",
+      "slides": [
+        {
+          "src": "/uploads/upload-1772678278490-a6vaq5h3e3.jpg",
+          "alt": "IMG_20250824_102325.jpg"
+        },
+        {
+          "src": "/uploads/upload-1772678287163-uy0n0awodz.jpg",
+          "alt": "test.jpg"
+        },
+        {
+          "src": "/hero/hero3.jpg",
+          "alt": "Welding work 3"
+        }
+      ]
+    },
+    "intro": {
+      "eyebrow": "Welding, Metal and Fabrication Specialist",
+      "title": "Heavy-duty fabrication for sheds, gates, and farm equipment",
+      "subtitle": "Arjun Industries delivers precision fabrication for industrial, residential, and agricultural needs. From warehouse sheds to custom gates and farm machinery, we build durable structures that last."
+    },
+    "quickStats": [
+      {
+        "title": "On-site measurement",
+        "description": "Accurate measurements and installation support."
+      },
+      {
+        "title": "Heavy MS sections",
+        "description": "Strong frames with clean finishing."
+      },
+      {
+        "title": "Repair and upgrade",
+        "description": "Fast modifications and reinforcement."
+      }
+    ],
+    "servicesTeaser": [
+      {
+        "label": "Structures",
+        "title": "Sheds and structures",
+        "points": [
+          "MS industrial sheds",
+          "Warehouse and workshop fabrication"
+        ]
+      },
+      {
+        "label": "Gates",
+        "title": "Gates and grills",
+        "points": [
+          "Main gates and railings",
+          "Custom grills and windows"
+        ]
+      },
+      {
+        "label": "Farm",
+        "title": "Farm equipment",
+        "points": [
+          "Tractor trolleys",
+          "Water tankers and cultivators"
+        ]
+      },
+      {
+        "label": "Support",
+        "title": "Repair and custom work",
+        "points": [
+          "On-site welding",
+          "Reinforcement and modifications"
+        ]
+      }
+    ],
+    "coverageAreas": [
+      "Bhopal",
+      "Sehore",
+      "Raisen",
+      "Hoshangabad (Narmadapuram)",
+      "Nearby rural areas"
+    ],
+    "testimonials": [
+      {
+        "name": "Rahul Verma",
+        "role": "Warehouse Owner, Bhopal",
+        "quote": "Strong fabrication work and clean finishing. The shed was delivered on time and the team handled everything smoothly."
+      },
+      {
+        "name": "Suman Yadav",
+        "role": "Farm Equipment Buyer",
+        "quote": "Good quality trolley build and quick support for minor adjustments. Very reliable service."
+      },
+      {
+        "name": "Vikram Patel",
+        "role": "Residential Client",
+        "quote": "Gate and grill work was sturdy and looks premium. Clear communication and fast installation."
+      }
+    ],
+    "stats": [
+      {
+        "value": "10+",
+        "label": "Years of Experience"
+      },
+      {
+        "value": "500+",
+        "label": "Projects Completed"
+      },
+      {
+        "value": "15+",
+        "label": "Cities Served"
+      },
+      {
+        "value": "300+",
+        "label": "Happy Clients"
+      }
+    ],
+    "cta": "Share your measurements or photos on WhatsApp for a quick estimate."
+  },
+  "about": {
+    "title": "About Arjun Industries",
+    "intro": "Arjun Industries is a trusted fabrication and welding workshop in Bhopal, serving industrial, residential, and agricultural clients.",
+    "body": "We specialize in custom metal work, durable MS structures, and precision finishing for projects of all sizes. Our team handles site measurements, material planning, fabrication, and installation. From sheds and gates to farm equipment and repair work, we deliver quality craftsmanship backed by reliable service.",
+    "focusCards": [
+      {
+        "title": "Durable fabrication",
+        "description": "Built with heavy MS sections for long-term performance."
+      },
+      {
+        "title": "Custom work as per site",
+        "description": "Measurements, design, and finishing tailored to your needs."
+      },
+      {
+        "title": "Reliable support",
+        "description": "On-time delivery with repair and modification support."
+      }
+    ],
+    "capabilities": [
+      "Industrial sheds and structures",
+      "Main gates, grills, windows",
+      "Warehouse fabrication",
+      "Farm equipment and trolleys",
+      "Repair and reinforcement"
+    ]
+  },
+  "services": {
+    "title": "Fabrication and welding services",
+    "subtitle": "Heavy-duty fabrication for industrial sheds, gates, grills, and farm equipment, with reliable installation and repair support.",
+    "items": [
+      {
+        "category": "Industrial",
+        "title": "Sheds and warehouse structures",
+        "details": [
+          "MS sheds with truss or portal frames",
+          "Warehouse fabrication and installation",
+          "Tin shed roofing with profile sheets"
+        ]
+      },
+      {
+        "category": "Residential",
+        "title": "Gates, grills and railings",
+        "details": [
+          "Custom main gates and compound gates",
+          "Window grills, balcony and stair railings",
+          "Channel gates and sliding gates"
+        ]
+      },
+      {
+        "category": "Agriculture",
+        "title": "Farm equipment fabrication",
+        "details": [
+          "Tractor trolleys and water tankers",
+          "Cultivators, boni machines, dhan ki chakri",
+          "Reinforced frames for heavy use"
+        ]
+      },
+      {
+        "category": "Support",
+        "title": "Repair and custom work",
+        "details": [
+          "On-site welding and reinforcement",
+          "Modification of existing structures",
+          "Custom fabrication on demand"
+        ]
+      },
+      {
+        "category": "Wholesale",
+        "title": "Shed material supply",
+        "details": [
+          "Profile colour coated sheets",
+          "Angle, channel, flat, bar, MS material",
+          "Bulk orders for contractors"
+        ]
+      }
+    ],
+    "cta": "Need something custom? Call or WhatsApp for quick guidance."
+  },
+  "gallery": {
+    "title": "Work gallery",
+    "subtitle": "A glimpse of recent fabrication projects and on-site work delivered by Arjun Industries.",
+    "items": [
+      {
+        "title": "Industrial shed framing",
+        "category": "Sheds",
+        "image": "/gallery/gallery1.jpg"
+      },
+      {
+        "title": "Warehouse tin shed",
+        "category": "Sheds",
+        "image": "/gallery/gallery2.jpg"
+      },
+      {
+        "title": "Tractor trolley build",
+        "category": "Farm equipment",
+        "image": "/gallery/gallery5.jpg"
+      },
+      {
+        "title": "Water tanker fabrication",
+        "category": "Farm equipment",
+        "image": "/gallery/gallery6.jpg"
+      },
+      {
+        "title": "On-site repair work",
+        "category": "Other",
+        "image": "/gallery/gallery1.jpg"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact Arjun Industries",
+    "subtitle": "Call or WhatsApp for fabrication work, sheds, gates, and farm equipment.",
+    "phone": "+91 98930 31717",
+    "whatsapp": "+91 98930 31717",
+    "address": "Bhairopur, Narmadapuram Rd, in front of IPS School, Bhopal, Madhya Pradesh 462047",
+    "hours": [
+      "Monday to Saturday: 9:30 AM - 7:30 PM",
+      "Sunday: By appointment or urgent work"
+    ],
+    "mapLat": "23.1481814",
+    "mapLng": "77.4799711"
+  }
+}
