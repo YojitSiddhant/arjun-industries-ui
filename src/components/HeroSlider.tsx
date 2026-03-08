@@ -61,7 +61,7 @@ export default function HeroSlider({ hero, contact }: HeroProps) {
 
         <div className="absolute inset-0">
           <div className="mx-auto flex h-full w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
-            <div className="max-w-xl space-y-4 text-white">
+            <div className="flex max-w-xl flex-col items-center space-y-4 text-center text-white md:items-start md:text-left">
               <span className="inline-flex rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/80">
                 {hero.eyebrow}
               </span>
@@ -69,10 +69,10 @@ export default function HeroSlider({ hero, contact }: HeroProps) {
                 {hero.title}
               </h1>
               <p className="text-sm text-white/80 sm:text-base">{hero.subtitle}</p>
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap justify-center gap-3 pt-2 md:justify-start">
                 <a
                   href={toPhoneHref(contact.phone)}
-                  className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
                 >
                   <FiPhone className="h-4 w-4" />
                   {hero.ctaPhoneLabel}
@@ -115,7 +115,7 @@ export default function HeroSlider({ hero, contact }: HeroProps) {
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2.5 w-2.5 rounded-full transition ${
                 index === activeIndex
-                  ? "bg-sky-400"
+                  ? "bg-accent-400"
                   : "bg-white/60 hover:bg-white"
               }`}
             />
@@ -125,3 +125,5 @@ export default function HeroSlider({ hero, contact }: HeroProps) {
     </section>
   );
 }
+
+

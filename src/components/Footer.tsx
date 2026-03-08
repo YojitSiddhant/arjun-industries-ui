@@ -17,13 +17,29 @@ export default function Footer({ globals, contact }: FooterProps) {
   )}`;
 
   return (
-    <footer className="mt-auto border-t border-slate-200 bg-slate-100 text-slate-800">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+    <footer className="mt-auto border-t border-slate-200 text-slate-800 glass-soft">
+      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="space-y-3">
-            <p className="text-base font-semibold text-slate-800">
-              {globals.businessName.toUpperCase()}
-            </p>
+            {globals.logoFooter ? (
+              <div className="flex items-center gap-3">
+                <span className="flex h-14 w-14 items-center justify-center">
+                  <img
+                    src={globals.logoFooter}
+                    alt={`${globals.businessName} logo`}
+                    className="h-full w-full object-contain"
+                    loading="lazy"
+                  />
+                </span>
+                <p className="text-base font-semibold text-slate-800">
+                  {globals.businessName.toUpperCase()}
+                </p>
+              </div>
+            ) : (
+              <p className="text-base font-semibold text-slate-800">
+                {globals.businessName.toUpperCase()}
+              </p>
+            )}
             <p className="text-sm text-slate-600">
               {globals.tagline}
             </p>
@@ -35,23 +51,23 @@ export default function Footer({ globals, contact }: FooterProps) {
           <div className="space-y-3">
             <p className="text-sm font-semibold text-slate-800">COMPANY</p>
             <div className="flex flex-col gap-2">
-              <Link href="/" className="flex items-center gap-2 text-slate-600 transition duration-200 hover:text-sky-600">
+              <Link href="/" className="flex items-center gap-2 text-slate-600 transition duration-200 hover-text-accent-600">
                 <FiHome className="h-5 w-5 text-slate-700" />
                 Home
               </Link>
-              <Link href="/about" className="flex items-center gap-2 text-slate-600 transition duration-200 hover:text-sky-600">
+              <Link href="/about" className="flex items-center gap-2 text-slate-600 transition duration-200 hover-text-accent-600">
                 <FiInfo className="h-5 w-5 text-slate-700" />
                 About Us
               </Link>
-              <Link href="/services" className="flex items-center gap-2 text-slate-600 transition duration-200 hover:text-sky-600">
+              <Link href="/services" className="flex items-center gap-2 text-slate-600 transition duration-200 hover-text-accent-600">
                 <FiLayers className="h-5 w-5 text-slate-700" />
                 Services
               </Link>
-              <Link href="/gallery" className="flex items-center gap-2 text-slate-600 transition duration-200 hover:text-sky-600">
+              <Link href="/gallery" className="flex items-center gap-2 text-slate-600 transition duration-200 hover-text-accent-600">
                 <FiImage className="h-5 w-5 text-slate-700" />
                 Gallery
               </Link>
-              <Link href="/contact" className="flex items-center gap-2 text-slate-600 transition duration-200 hover:text-sky-600">
+              <Link href="/contact" className="flex items-center gap-2 text-slate-600 transition duration-200 hover-text-accent-600">
                 <FiPhone className="h-5 w-5 text-slate-700" />
                 Contact
               </Link>
@@ -63,7 +79,7 @@ export default function Footer({ globals, contact }: FooterProps) {
             <div className="flex flex-col items-start gap-3">
               <a
                 href={phoneHref}
-                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700"
+                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover-border-accent-300 hover-text-accent-700"
               >
                 <FiPhone className="h-4 w-4" />
                 Call
@@ -79,7 +95,7 @@ export default function Footer({ globals, contact }: FooterProps) {
                 href={mapHref}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-sky-300 hover:text-sky-700"
+                className="inline-flex w-32 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover-border-accent-300 hover-text-accent-700"
               >
                 <FiMapPin className="h-4 w-4" />
                 Location
@@ -96,3 +112,6 @@ export default function Footer({ globals, contact }: FooterProps) {
     </footer>
   );
 }
+
+
+

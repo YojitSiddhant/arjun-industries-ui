@@ -16,11 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-slate-50 text-slate-800 font-sans antialiased">
-        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
+      <body className="bg-stone-50 text-slate-800 font-sans antialiased">
+        <div className="min-h-screen bg-stone-50 text-slate-800 flex flex-col smooth-fade">
           {children}
         </div>
       </body>
     </html>
   );
 }
+
+

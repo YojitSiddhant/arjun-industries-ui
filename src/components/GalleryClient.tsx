@@ -117,8 +117,8 @@ export default function GalleryClient({ items }: GalleryClientProps) {
             onClick={() => setActiveFilter(filter)}
             className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
               activeFilter === filter
-                ? "border-sky-300 bg-sky-50 text-sky-700"
-                : "border-slate-200 text-slate-600 hover:border-sky-300 hover:text-sky-700"
+                ? "border-accent-300 bg-accent-50 text-accent-700"
+                : "border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
             }`}
           >
             {filterIcons[filter] ?? filterIcons.All}
@@ -131,7 +131,7 @@ export default function GalleryClient({ items }: GalleryClientProps) {
         {visibleItems.map((item) => (
           <div
             key={`${item.title}-${item.image}`}
-            className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
+            className="rounded-3xl border border-slate-200 bg-white p-4 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover-border-accent-300 hover:shadow-md glass-soft"
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
               <Image
@@ -142,8 +142,8 @@ export default function GalleryClient({ items }: GalleryClientProps) {
                 className="object-cover transition duration-300 hover:scale-105"
               />
             </div>
-            <div className="mt-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">
+            <div className="mt-3 text-center">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-600">
                 {item.category}
               </p>
               <p className="mt-2 text-sm font-semibold text-slate-800">
@@ -156,3 +156,5 @@ export default function GalleryClient({ items }: GalleryClientProps) {
     </>
   );
 }
+
+

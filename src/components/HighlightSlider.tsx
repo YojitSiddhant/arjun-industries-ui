@@ -37,8 +37,8 @@ export default function HighlightSlider() {
   }, []);
 
   return (
-    <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:shadow-md">
-      <span className="inline-flex rounded-full border border-sky-300/60 bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-sky-700">
+    <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
+      <span className="inline-flex rounded-full border border-accent-300 bg-accent-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-accent-700">
         Key Highlights
       </span>
       <div className="mt-4">
@@ -49,7 +49,7 @@ export default function HighlightSlider() {
           {highlights[activeIndex].description}
         </p>
       </div>
-      <div className="mt-4 flex items-center gap-2">
+      <div className="mt-4 flex items-center justify-center gap-2">
         {highlights.map((_, index) => (
           <button
             key={index}
@@ -57,7 +57,7 @@ export default function HighlightSlider() {
             onClick={() => setActiveIndex(index)}
             className={`h-2.5 w-2.5 rounded-full transition ${
               index === activeIndex
-                ? "bg-sky-500"
+                ? "bg-accent-500"
                 : "bg-slate-300 hover:bg-slate-400"
             }`}
             aria-label={`Go to highlight ${index + 1}`}
@@ -67,3 +67,5 @@ export default function HighlightSlider() {
     </div>
   );
 }
+
+

@@ -51,13 +51,16 @@ export default async function AboutPage() {
   const content = await getContent();
 
   return (
-    <main className="bg-slate-50 text-slate-800">
-      <Navbar businessName={content.globals.businessName} />
+    <main className="theme-amber bg-stone-50 text-slate-800">
+      <Navbar
+        businessName={content.globals.businessName}
+        logoPath={content.globals.logoNavbar}
+      />
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-in space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+          <div className="animate-fade-in space-y-4 text-center md:text-left">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
               About
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -73,17 +76,17 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.6fr,1fr]">
             <div className="grid gap-4 sm:grid-cols-2">
               {content.about.focusCards.map((card, index) => (
                 <div
                   key={card.title}
-                  className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
+                  className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover-border-accent-300 hover:shadow-md glass-soft"
                 >
-                  <div className="flex items-center gap-3 text-sky-600">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-sky-200 bg-sky-50">
+                  <div className="flex flex-col items-center gap-3 text-accent-600">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-accent-200 bg-accent-50">
                       {focusIcons[index] ?? focusIcons[0]}
                     </span>
                     <h3 className="text-lg font-semibold text-slate-800">
@@ -97,15 +100,15 @@ export default async function AboutPage() {
               ))}
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm glass-soft">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 What we can handle
               </p>
               <ul className="mt-4 space-y-2 text-sm text-slate-600">
                 {content.about.capabilities.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
+                  <li key={item} className="flex items-start justify-center gap-2">
                     <svg
-                      className="mt-0.5 h-4 w-4 text-sky-500"
+                      className="mt-0.5 h-4 w-4 text-accent-500"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -129,3 +132,6 @@ export default async function AboutPage() {
     </main>
   );
 }
+
+
+

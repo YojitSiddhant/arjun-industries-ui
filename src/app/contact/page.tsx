@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ContactLeadForm from "@/components/ContactLeadForm";
 import { FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent } from "@/lib/content";
@@ -12,13 +13,16 @@ export default async function ContactPage() {
   const mapUrl = `https://www.google.com/maps?q=${content.contact.mapLat},${content.contact.mapLng}&z=17&output=embed`;
 
   return (
-    <main className="bg-slate-50 text-slate-800">
-      <Navbar businessName={content.globals.businessName} />
+    <main className="theme-purple bg-stone-50 text-slate-800">
+      <Navbar
+        businessName={content.globals.businessName}
+        logoPath={content.globals.logoNavbar}
+      />
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+          <div className="space-y-4 text-center md:text-left">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
               CONTACT
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -31,11 +35,11 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="py-10">
+      <section className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
+              <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 <FiPhone className="h-5 w-5" />
                 Phone
               </p>
@@ -44,15 +48,15 @@ export default async function ContactPage() {
               </p>
               <a
                 href={phoneHref}
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
+                className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
               >
                 <FiPhone className="h-5 w-5" />
                 Call Now
               </a>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-600">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
+              <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-600">
                 <FaWhatsapp className="h-5 w-5" />
                 WhatsApp
               </p>
@@ -70,8 +74,8 @@ export default async function ContactPage() {
               </a>
             </div>
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
+              <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 <FiMapPin className="h-5 w-5" />
                 Workshop
               </p>
@@ -83,9 +87,15 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="py-10">
+      <section className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
+          <ContactLeadForm whatsappNumber={content.contact.whatsapp} />
+        </div>
+      </section>
+
+      <section className="py-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
             <h2 className="text-lg font-semibold text-slate-800">Working hours</h2>
             {content.contact.hours.map((line) => (
               <p key={line} className="mt-2 text-sm text-slate-600">
@@ -96,9 +106,9 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:shadow-md">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
             <h2 className="text-lg font-semibold text-slate-800">Location on map</h2>
             <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
               <iframe
@@ -116,3 +126,6 @@ export default async function ContactPage() {
     </main>
   );
 }
+
+
+

@@ -8,6 +8,8 @@ export type SiteContent = {
     footerBlurb: string;
     footerNote: string;
     copyright: string;
+    logoNavbar?: string;
+    logoFooter?: string;
   };
   home: {
     hero: {

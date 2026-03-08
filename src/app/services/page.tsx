@@ -88,13 +88,16 @@ export default async function ServicesPage() {
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
 
   return (
-    <main className="bg-slate-50 text-slate-800">
-      <Navbar businessName={content.globals.businessName} />
+    <main className="theme-emerald bg-stone-50 text-slate-800">
+      <Navbar
+        businessName={content.globals.businessName}
+        logoPath={content.globals.logoNavbar}
+      />
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-in space-y-4">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+          <div className="animate-fade-in space-y-4 text-center md:text-left">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
               Services
             </span>
             <h1 className="text-3xl font-semibold text-slate-800 sm:text-4xl">
@@ -107,19 +110,19 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {content.services.items.map((service, index) => (
               <div
                 key={service.title}
-                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-sky-300 hover:shadow-md"
+                className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover-border-accent-300 hover:shadow-md glass-soft"
               >
-                <div className="flex items-center gap-3 text-sky-600">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-sky-200 bg-sky-50">
+                <div className="flex flex-col items-center gap-3 text-accent-600">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-accent-200 bg-accent-50">
                     {serviceIcons[index] ?? serviceIcons[0]}
                   </span>
-                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-sky-600">
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent-600">
                     {service.category}
                   </p>
                 </div>
@@ -137,16 +140,16 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section className="py-12">
+      <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center">
+          <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm glass-soft sm:flex-row sm:items-center">
             <p className="text-sm text-slate-600">
               {content.services.cta}
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap justify-center gap-3">
               <a
                 href={phoneHref}
-                className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
               >
                 <FiPhone className="h-4 w-4" />
                 Call
@@ -167,3 +170,6 @@ export default async function ServicesPage() {
     </main>
   );
 }
+
+
+

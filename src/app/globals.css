@@ -11,12 +11,237 @@ html {
 }
 
 body {
-  background-color: #f1f5ff;
+  background-color: #f8f7f4;
   color: #1f2937;
   font-family: system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+:root {
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+}
+
+.theme-sky {
+  --accent-50: #eff6ff;
+  --accent-100: #dbeafe;
+  --accent-200: #bfdbfe;
+  --accent-300: #93c5fd;
+  --accent-400: #60a5fa;
+  --accent-500: #3b82f6;
+  --accent-600: #2563eb;
+  --accent-700: #1d4ed8;
+}
+
+.theme-amber {
+  --accent-50: #fffbeb;
+  --accent-100: #fef3c7;
+  --accent-200: #fde68a;
+  --accent-300: #fcd34d;
+  --accent-400: #fbbf24;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-700: #b45309;
+}
+
+.theme-emerald {
+  --accent-50: #ecfdf5;
+  --accent-100: #d1fae5;
+  --accent-200: #a7f3d0;
+  --accent-300: #6ee7b7;
+  --accent-400: #34d399;
+  --accent-500: #10b981;
+  --accent-600: #059669;
+  --accent-700: #047857;
+}
+
+.theme-rose {
+  --accent-50: #fff1f2;
+  --accent-100: #ffe4e6;
+  --accent-200: #fecdd3;
+  --accent-300: #fda4af;
+  --accent-400: #fb7185;
+  --accent-500: #f43f5e;
+  --accent-600: #e11d48;
+  --accent-700: #be123c;
+}
+
+.theme-indigo {
+  --accent-50: #eef2ff;
+  --accent-100: #e0e7ff;
+  --accent-200: #c7d2fe;
+  --accent-300: #a5b4fc;
+  --accent-400: #818cf8;
+  --accent-500: #6366f1;
+  --accent-600: #4f46e5;
+  --accent-700: #4338ca;
+}
+
+.theme-teal {
+  --accent-50: #f0fdfa;
+  --accent-100: #ccfbf1;
+  --accent-200: #99f6e4;
+  --accent-300: #5eead4;
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+}
+
+.theme-purple {
+  --accent-50: #f5f3ff;
+  --accent-100: #ede9fe;
+  --accent-200: #ddd6fe;
+  --accent-300: #c4b5fd;
+  --accent-400: #a78bfa;
+  --accent-500: #8b5cf6;
+  --accent-600: #7c3aed;
+  --accent-700: #6d28d9;
+}
+
+.text-accent-500 {
+  color: var(--accent-500);
+}
+
+.text-accent-600 {
+  color: var(--accent-600);
+}
+
+.text-accent-700 {
+  color: var(--accent-700);
+}
+
+.bg-accent-50 {
+  background-color: var(--accent-50);
+}
+
+.bg-accent-100 {
+  background-color: var(--accent-100);
+}
+
+.bg-accent-300 {
+  background-color: var(--accent-300);
+}
+
+.bg-accent-400 {
+  background-color: var(--accent-400);
+}
+
+.bg-accent-500 {
+  background-color: var(--accent-500);
+}
+
+.bg-accent-600 {
+  background-color: var(--accent-600);
+}
+
+.border-accent-200 {
+  border-color: var(--accent-200);
+}
+
+.border-accent-300 {
+  border-color: var(--accent-300);
+}
+
+.border-accent-400 {
+  border-color: var(--accent-400);
+}
+
+.hover-border-accent-300:hover {
+  border-color: var(--accent-300);
+}
+
+.hover-text-accent-600:hover {
+  color: var(--accent-600);
+}
+
+.hover-text-accent-700:hover {
+  color: var(--accent-700);
+}
+
+.group:hover .group-hover-text-accent-600 {
+  color: var(--accent-600);
+}
+
+.hover-bg-accent-600:hover {
+  background-color: var(--accent-600);
+}
+
+.hover-bg-accent-50:hover {
+  background-color: var(--accent-50);
+}
+
+.disabled-bg-accent-300:disabled {
+  background-color: var(--accent-300);
+}
+
+.focus-border-accent-400:focus {
+  border-color: var(--accent-400);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease,
+      transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+
+  .glass,
+  .glass-soft,
+  .glass-strong {
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+      box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .smooth-fade {
+    animation: smooth-fade 0.7s ease-out both;
+  }
+}
+
+@keyframes smooth-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 img {
@@ -63,3 +288,5 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
+

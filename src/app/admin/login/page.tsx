@@ -35,11 +35,11 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800">
-      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-12">
+    <main className="theme-indigo min-h-screen bg-stone-50 text-slate-800">
+      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-8">
         <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
           <div className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-sky-600">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
               Admin Login
             </span>
             <h1 className="text-2xl font-semibold text-slate-800">
@@ -59,7 +59,7 @@ export default function AdminLoginPage() {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-sky-400"
+                className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus-border-accent-400"
                 placeholder="Enter admin password"
                 required
               />
@@ -74,7 +74,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-sky-600 disabled:cursor-not-allowed disabled:bg-sky-300"
+              className="w-full rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 disabled:cursor-not-allowed disabled-bg-accent-300"
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
@@ -84,3 +84,8 @@ export default function AdminLoginPage() {
     </main>
   );
 }
+
+
+
+
+

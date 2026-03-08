@@ -14,6 +14,130 @@ const toLines = (value: string) =>
 
 const fromLines = (value: string[] | undefined) => (value ? value.join("\n") : "");
 
+const prepareLogoFile = async (file: File): Promise<File> => {
+  const bitmap =
+    "createImageBitmap" in window
+      ? await createImageBitmap(file)
+      : await new Promise<ImageBitmap>((resolve, reject) => {
+          const img = new Image();
+          const url = URL.createObjectURL(file);
+          img.onload = () => {
+            URL.revokeObjectURL(url);
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            if (!ctx) {
+              reject(new Error("Canvas not supported."));
+              return;
+            }
+            ctx.drawImage(img, 0, 0);
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                reject(new Error("Image processing failed."));
+                return;
+              }
+              createImageBitmap(blob).then(resolve).catch(reject);
+            });
+          };
+          img.onerror = () => reject(new Error("Image load failed."));
+          img.src = url;
+        });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    return file;
+  }
+  ctx.drawImage(bitmap, 0, 0);
+  const { data, width, height } = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  let minX = width;
+  let minY = height;
+  let maxX = 0;
+  let maxY = 0;
+  let found = false;
+
+  const whiteThreshold = 245;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const idx = (y * width + x) * 4;
+      const r = data[idx];
+      const g = data[idx + 1];
+      const b = data[idx + 2];
+      const alpha = data[idx + 3];
+      const isOpaque = alpha > 10;
+      const isNearWhite = r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold;
+      if (isOpaque && !isNearWhite) {
+        found = true;
+        if (x < minX) minX = x;
+        if (y < minY) minY = y;
+        if (x > maxX) maxX = x;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+
+  if (!found) {
+    const fallbackSize = Math.min(width, height);
+    const fallbackX = Math.floor((width - fallbackSize) / 2);
+    const fallbackY = Math.floor((height - fallbackSize) / 2);
+    const outputSize = 512;
+    const outputCanvas = document.createElement("canvas");
+    outputCanvas.width = outputSize;
+    outputCanvas.height = outputSize;
+    const outCtx = outputCanvas.getContext("2d");
+    if (!outCtx) return file;
+    outCtx.drawImage(
+      canvas,
+      fallbackX,
+      fallbackY,
+      fallbackSize,
+      fallbackSize,
+      0,
+      0,
+      outputSize,
+      outputSize
+    );
+    const blob = await new Promise<Blob | null>((resolve) =>
+      outputCanvas.toBlob(resolve, "image/png", 0.92)
+    );
+    if (!blob) return file;
+    return new File([blob], `logo-${Date.now()}.png`, { type: "image/png" });
+  }
+
+  const cropW = maxX - minX + 1;
+  const cropH = maxY - minY + 1;
+  const size = Math.max(cropW, cropH);
+  let cropX = minX - Math.floor((size - cropW) / 2);
+  let cropY = minY - Math.floor((size - cropH) / 2);
+
+  if (cropX < 0) cropX = 0;
+  if (cropY < 0) cropY = 0;
+  if (cropX + size > width) cropX = Math.max(0, width - size);
+  if (cropY + size > height) cropY = Math.max(0, height - size);
+
+  const outputSize = 512;
+  const outputCanvas = document.createElement("canvas");
+  outputCanvas.width = outputSize;
+  outputCanvas.height = outputSize;
+  const outCtx = outputCanvas.getContext("2d");
+  if (!outCtx) {
+    return file;
+  }
+  outCtx.drawImage(canvas, cropX, cropY, size, size, 0, 0, outputSize, outputSize);
+
+  const blob = await new Promise<Blob | null>((resolve) =>
+    outputCanvas.toBlob(resolve, "image/png", 0.92)
+  );
+  if (!blob) {
+    return file;
+  }
+  return new File([blob], `logo-${Date.now()}.png`, { type: "image/png" });
+};
+
 const setByPath = (obj: SiteContent, path: string, value: unknown): SiteContent => {
   const parts = path.split(".");
   const next: any = Array.isArray(obj) ? [...obj] : { ...obj };
@@ -228,7 +352,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
           <button
             type="button"
             onClick={saveContent}
-            className="rounded-full bg-sky-500 px-6 py-2 text-sm font-semibold text-white transition hover:bg-sky-600"
+            className="rounded-full bg-accent-500 px-6 py-2 text-sm font-semibold text-white transition hover-bg-accent-600"
           >
             {status.type === "saving" ? "Saving..." : "Save Changes"}
           </button>
@@ -257,8 +381,8 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
             onClick={() => setActiveTab(tab.id as typeof activeTab)}
             className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
               activeTab === tab.id
-                ? "bg-sky-500 text-white"
-                : "border border-slate-200 text-slate-600 hover:border-sky-300 hover:text-sky-700"
+                ? "bg-accent-500 text-white"
+                : "border border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
             }`}
           >
             {tab.label}
@@ -277,7 +401,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
         </div>
       ) : null}
       {uploading ? (
-        <div className="rounded-2xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700">
+        <div className="rounded-2xl border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-700">
           {uploading}
         </div>
       ) : null}
@@ -325,6 +449,81 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                 setContent((prev) => setByPath(prev, "globals.copyright", value))
               }
             />
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {[
+              { label: "Navbar logo", key: "globals.logoNavbar" },
+              { label: "Footer logo", key: "globals.logoFooter" },
+            ].map((logo) => {
+              const value =
+                logo.key === "globals.logoNavbar"
+                  ? content.globals.logoNavbar
+                  : content.globals.logoFooter;
+              return (
+                <div
+                  key={logo.key}
+                  className="rounded-2xl border border-slate-200 p-4"
+                >
+                  <p className="text-sm font-semibold text-slate-800">
+                    {logo.label}
+                  </p>
+                  <div className="mt-3 flex items-center gap-3">
+                    <span className="flex h-14 w-14 items-center justify-center border border-slate-200 bg-white">
+                      {value ? (
+                        <img
+                          src={value}
+                          alt={`${content.globals.businessName} logo`}
+                          className="h-full w-full object-contain"
+                        />
+                      ) : (
+                        <span className="text-xs text-slate-400">No logo</span>
+                      )}
+                    </span>
+                    <input
+                      className="w-full rounded-2xl border border-slate-200 px-4 py-2 text-xs text-slate-500"
+                      value={value ?? ""}
+                      readOnly
+                    />
+                  </div>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <label className="inline-flex h-9 cursor-pointer items-center justify-center rounded-full border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover-border-accent-300 hover-text-accent-700">
+                      Upload logo
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          try {
+                            const prepared = await prepareLogoFile(file);
+                            const path = await uploadImage(prepared);
+                            setContent((prev) => setByPath(prev, logo.key, path));
+                          } catch (error) {
+                            setStatus({
+                              type: "error",
+                              message:
+                                error instanceof Error
+                                  ? error.message
+                                  : "Upload failed.",
+                            });
+                          } finally {
+                            event.target.value = "";
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setContent((prev) => setByPath(prev, logo.key, ""))}
+                      className="inline-flex h-9 items-center justify-center rounded-full border border-rose-200 px-4 text-xs font-semibold text-rose-600"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       ) : null}
@@ -413,7 +612,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                         readOnly
                       />
                     </div>
-                    <label className="mt-6 inline-flex h-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover:border-sky-300 hover:text-sky-700">
+                    <label className="mt-6 inline-flex h-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover-border-accent-300 hover-text-accent-700">
                       Replace image
                       <input
                         type="file"
@@ -740,7 +939,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                         })
                       }
                     />
-                    <label className="mt-6 inline-flex h-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover:border-sky-300 hover:text-sky-700">
+                    <label className="mt-6 inline-flex h-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 px-4 text-xs font-semibold text-slate-600 transition hover-border-accent-300 hover-text-accent-700">
                       Replace image
                       <input
                         type="file"
@@ -925,3 +1124,5 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
     </div>
   );
 }
+
+
