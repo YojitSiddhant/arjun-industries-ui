@@ -80,6 +80,12 @@ export async function getContent(): Promise<SiteContent> {
   return loadFileContent();
 }
 
+export async function getContentVersion(): Promise<string> {
+  noStore();
+  const stats = await fs.stat(contentPath);
+  return `${stats.mtimeMs}`;
+}
+
 export async function saveContent(content: SiteContent): Promise<void> {
   await saveFileContent(content);
 }

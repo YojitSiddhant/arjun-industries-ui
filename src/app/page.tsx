@@ -4,7 +4,7 @@ import HeroSlider from "@/components/HeroSlider";
 import StatsGrid from "@/components/StatsGrid";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { getContent } from "@/lib/content";
+import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
 const quickStatIcons = [
@@ -57,6 +57,7 @@ const quickStatIcons = [
 
 export default async function Home() {
   const content = await getContent();
+  const assetVersion = await getContentVersion();
   const phoneHref = toPhoneHref(content.contact.phone);
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
 
@@ -65,9 +66,14 @@ export default async function Home() {
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
+        assetVersion={assetVersion}
       />
 
-      <HeroSlider hero={content.home.hero} contact={content.contact} />
+      <HeroSlider
+        hero={content.home.hero}
+        contact={content.contact}
+        assetVersion={assetVersion}
+      />
 
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -264,7 +270,11 @@ export default async function Home() {
         </div>
       </section>
 
-      <Footer globals={content.globals} contact={content.contact} />
+      <Footer
+        globals={content.globals}
+        contact={content.contact}
+        assetVersion={assetVersion}
+      />
     </main>
   );
 }

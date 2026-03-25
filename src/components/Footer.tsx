@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { FiHome, FiInfo, FiLayers, FiImage, FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import { withAssetVersion } from "@/lib/assets";
 import type { SiteContent } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
 type FooterProps = {
   globals: SiteContent["globals"];
   contact: SiteContent["contact"];
+  assetVersion: string;
 };
 
-export default function Footer({ globals, contact }: FooterProps) {
+export default function Footer({ globals, contact, assetVersion }: FooterProps) {
   const phoneHref = toPhoneHref(contact.phone);
   const whatsappHref = toWhatsAppHref(contact.whatsapp);
   const mapHref = `https://www.google.com/maps?q=${encodeURIComponent(
@@ -25,7 +27,7 @@ export default function Footer({ globals, contact }: FooterProps) {
               <div className="flex items-center justify-center gap-3 md:justify-start">
                 <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center">
                   <img
-                    src={globals.logoFooter}
+                    src={withAssetVersion(globals.logoFooter, assetVersion)}
                     alt={`${globals.businessName} logo`}
                     className="h-full w-full object-contain"
                     loading="lazy"

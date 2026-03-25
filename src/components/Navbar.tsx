@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FiHome, FiInfo, FiLayers, FiImage, FiPhone, FiTool, FiMenu, FiX } from "react-icons/fi";
+import { withAssetVersion } from "@/lib/assets";
 
 const navLinks = [
   { href: "/", label: "Home", icon: FiHome },
@@ -16,9 +17,11 @@ const navLinks = [
 export default function Navbar({
   businessName,
   logoPath,
+  assetVersion,
 }: {
   businessName: string;
   logoPath?: string;
+  assetVersion: string;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -38,7 +41,7 @@ export default function Navbar({
           {logoPath ? (
             <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center sm:h-12 sm:w-12">
               <img
-                src={logoPath}
+                src={withAssetVersion(logoPath, assetVersion)}
                 alt={`${businessName} logo`}
                 className="h-full w-full object-contain"
                 loading="lazy"

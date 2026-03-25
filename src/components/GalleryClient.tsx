@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState, type ReactElement } from "react";
+import { withAssetVersion } from "@/lib/assets";
 
 type GalleryItem = {
   title: string;
@@ -11,6 +12,7 @@ type GalleryItem = {
 
 type GalleryClientProps = {
   items: GalleryItem[];
+  assetVersion: string;
 };
 
 const filterIcons: Record<string, ReactElement> = {
@@ -95,7 +97,7 @@ const filterIcons: Record<string, ReactElement> = {
   ),
 };
 
-export default function GalleryClient({ items }: GalleryClientProps) {
+export default function GalleryClient({ items, assetVersion }: GalleryClientProps) {
   const categories = Array.from(new Set(items.map((item) => item.category)));
   const filters = ["All", ...categories];
   const [activeFilter, setActiveFilter] = useState(filters[0] ?? "All");
@@ -111,21 +113,21 @@ export default function GalleryClient({ items }: GalleryClientProps) {
     <>
       <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
         <div className="flex min-w-max gap-3 sm:min-w-0 sm:flex-wrap">
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            onClick={() => setActiveFilter(filter)}
-            className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
-              activeFilter === filter
-                ? "border-accent-300 bg-accent-50 text-accent-700"
-                : "border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
-            }`}
-          >
-            {filterIcons[filter] ?? filterIcons.All}
-            {filter}
-          </button>
-        ))}
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setActiveFilter(filter)}
+              className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
+                activeFilter === filter
+                  ? "border-accent-300 bg-accent-50 text-accent-700"
+                  : "border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
+              }`}
+            >
+              {filterIcons[filter] ?? filterIcons.All}
+              {filter}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -137,7 +139,7 @@ export default function GalleryClient({ items }: GalleryClientProps) {
           >
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
               <Image
-                src={item.image}
+                src={withAssetVersion(item.image, assetVersion)}
                 alt={item.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"

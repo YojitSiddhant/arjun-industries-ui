@@ -1,16 +1,18 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryClient from "@/components/GalleryClient";
-import { getContent } from "@/lib/content";
+import { getContent, getContentVersion } from "@/lib/content";
 
 export default async function GalleryPage() {
   const content = await getContent();
+  const assetVersion = await getContentVersion();
 
   return (
     <main className="theme-rose bg-stone-50 text-slate-800">
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
+        assetVersion={assetVersion}
       />
 
       <section className="py-8">
@@ -31,11 +33,15 @@ export default async function GalleryPage() {
 
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <GalleryClient items={content.gallery.items} />
+          <GalleryClient items={content.gallery.items} assetVersion={assetVersion} />
         </div>
       </section>
 
-      <Footer globals={content.globals} contact={content.contact} />
+      <Footer
+        globals={content.globals}
+        contact={content.contact}
+        assetVersion={assetVersion}
+      />
     </main>
   );
 }

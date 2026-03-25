@@ -2,10 +2,18 @@
 
 import { useState } from "react";
 import type { SiteContent } from "@/lib/content";
+import type { Enquiry } from "@/lib/enquiries";
 
 type Status = { type: "idle" | "saving" | "success" | "error"; message?: string };
 type Field = { key: string; label: string; type?: "text" | "textarea" | "lines" };
-type AdminTab = "home" | "about" | "services" | "gallery" | "contact" | "settings";
+type AdminTab =
+  | "home"
+  | "about"
+  | "services"
+  | "gallery"
+  | "contact"
+  | "enquiries"
+  | "settings";
 
 const toLines = (value: string) =>
   value
@@ -183,6 +191,11 @@ const editorTabs: Array<{
     description: "Phone, WhatsApp, address, working hours, and map coordinates.",
   },
   {
+    id: "enquiries",
+    label: "Enquiries",
+    description: "Recent website enquiries submitted from the contact form.",
+  },
+  {
     id: "settings",
     label: "Settings",
     description: "Business name, logos, and footer branding details.",
@@ -344,10 +357,18 @@ function ObjectListEditor<T extends Record<string, any>>({
   );
 }
 
-export default function AdminEditor({ initialContent }: { initialContent: SiteContent }) {
+export default function AdminEditor({
+  initialContent,
+  initialEnquiries,
+}: {
+  initialContent: SiteContent;
+  initialEnquiries: Enquiry[];
+}) {
   const [content, setContent] = useState<SiteContent>(initialContent);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>(initialEnquiries);
   const [status, setStatus] = useState<Status>({ type: "idle" });
   const [uploading, setUploading] = useState<string | null>(null);
+  const [loadingEnquiries, setLoadingEnquiries] = useState(false);
   const [activeTab, setActiveTab] = useState<AdminTab>("home");
   const [savedSnapshot, setSavedSnapshot] = useState(() =>
     JSON.stringify(initialContent)
@@ -401,6 +422,20 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
     window.location.href = "/admin/login";
   };
 
+  const refreshEnquiries = async () => {
+    setLoadingEnquiries(true);
+    const response = await fetch("/api/admin/enquiries");
+    if (!response.ok) {
+      setLoadingEnquiries(false);
+      setStatus({ type: "error", message: "Could not load enquiries." });
+      return;
+    }
+
+    const data = (await response.json()) as Enquiry[];
+    setEnquiries(data);
+    setLoadingEnquiries(false);
+  };
+
   return (
     <div className="space-y-6">
       <section className="overflow-hidden rounded-[32px] border border-slate-200/80 bg-[linear-gradient(135deg,#ffffff_0%,#eef2ff_48%,#ecfeff_100%)] p-6 shadow-[0_22px_60px_rgba(15,23,42,0.10)] sm:p-8">
@@ -433,6 +468,14 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
                 </p>
                 <p className="mt-2 text-2xl font-semibold text-slate-900">
                   {content.gallery.items.length}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-slate-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  Enquiries
+                </p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900">
+                  {enquiries.length}
                 </p>
               </div>
             </div>
@@ -1249,6 +1292,78 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
               value={content.contact.mapLng}
               onChange={(value) => setContent((prev) => setByPath(prev, "contact.mapLng", value))}
             />
+          </div>
+        </section>
+      ) : null}
+      {activeTab === "enquiries" ? (
+        <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold text-slate-800">Website Enquiries</h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Every contact form submission appears here for the website owner.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={refreshEnquiries}
+              className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm"
+            >
+              {loadingEnquiries ? "Refreshing..." : "Refresh list"}
+            </button>
+          </div>
+
+          <div className="mt-6 space-y-4">
+            {enquiries.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 text-center text-sm text-slate-500">
+                No enquiries yet.
+              </div>
+            ) : (
+              enquiries.map((enquiry) => (
+                <article
+                  key={enquiry.id}
+                  className="rounded-3xl border border-slate-200 bg-slate-50/70 p-5"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-base font-semibold text-slate-900">
+                        {enquiry.name}
+                      </h3>
+                      <p className="mt-1 text-sm text-slate-500">{enquiry.phone}</p>
+                    </div>
+                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      {new Date(enquiry.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    <div className="rounded-2xl bg-white p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        Project Type
+                      </p>
+                      <p className="mt-2 text-sm text-slate-800">{enquiry.projectType}</p>
+                    </div>
+                    <div className="rounded-2xl bg-white p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        Location
+                      </p>
+                      <p className="mt-2 text-sm text-slate-800">
+                        {enquiry.location || "Not provided"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 rounded-2xl bg-white p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      Message
+                    </p>
+                    <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-slate-800">
+                      {enquiry.message || "No extra message provided."}
+                    </p>
+                  </div>
+                </article>
+              ))
+            )}
           </div>
         </section>
       ) : null}

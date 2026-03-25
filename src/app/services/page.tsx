@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { getContent } from "@/lib/content";
+import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
 const serviceIcons = [
@@ -84,6 +84,7 @@ const serviceIcons = [
 
 export default async function ServicesPage() {
   const content = await getContent();
+  const assetVersion = await getContentVersion();
   const phoneHref = toPhoneHref(content.contact.phone);
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
 
@@ -92,6 +93,7 @@ export default async function ServicesPage() {
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
+        assetVersion={assetVersion}
       />
 
       <section className="py-8">
@@ -166,7 +168,11 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <Footer globals={content.globals} contact={content.contact} />
+      <Footer
+        globals={content.globals}
+        contact={content.contact}
+        assetVersion={assetVersion}
+      />
     </main>
   );
 }

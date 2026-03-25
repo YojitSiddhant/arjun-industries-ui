@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getContent } from "@/lib/content";
+import { getContent, getContentVersion } from "@/lib/content";
 
 const focusIcons = [
   <svg
@@ -49,12 +49,14 @@ const focusIcons = [
 
 export default async function AboutPage() {
   const content = await getContent();
+  const assetVersion = await getContentVersion();
 
   return (
     <main className="theme-amber bg-stone-50 text-slate-800">
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
+        assetVersion={assetVersion}
       />
 
       <section className="py-8">
@@ -131,7 +133,11 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <Footer globals={content.globals} contact={content.contact} />
+      <Footer
+        globals={content.globals}
+        contact={content.contact}
+        assetVersion={assetVersion}
+      />
     </main>
   );
 }

@@ -1,8 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { FiRefreshCw } from "react-icons/fi";
+import { FiRefreshCw, FiSend } from "react-icons/fi";
 import { toWhatsAppHref } from "@/lib/format";
 
 type ContactLeadFormProps = {
@@ -27,6 +26,10 @@ const initialState: FormState = {
 
 export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps) {
   const [form, setForm] = useState<FormState>(initialState);
+  const [status, setStatus] = useState<{
+    type: "idle" | "saving" | "error";
+    message?: string;
+  }>({ type: "idle" });
 
   const whatsappLink = useMemo(() => toWhatsAppHref(whatsappNumber), [whatsappNumber]);
 
@@ -34,8 +37,25 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setStatus({ type: "saving" });
+
+    const response = await fetch("/api/enquiries", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      setStatus({
+        type: "error",
+        message: data?.message ?? "Could not submit enquiry.",
+      });
+      return;
+    }
+
     const lines = [
       "New enquiry from website",
       `Name: ${form.name}`,
@@ -47,6 +67,8 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
     const text = encodeURIComponent(lines.join("\n"));
     const url = `${whatsappLink}?text=${text}`;
     window.open(url, "_blank", "noopener,noreferrer");
+    setStatus({ type: "idle" });
+    setForm(initialState);
   };
 
   return (
@@ -56,10 +78,10 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
           Quick Enquiry
         </p>
         <h2 className="text-2xl font-semibold text-slate-800">
-          Send your requirement on WhatsApp
+          Send your requirement
         </h2>
         <p className="text-sm text-slate-600">
-          Fill the details and we will reply with a quick estimate.
+          Fill the details and submit your enquiry for a quick estimate.
         </p>
       </div>
 
@@ -116,13 +138,19 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
             placeholder="Share measurements or details"
           />
         </label>
+        {status.type === "error" ? (
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 md:col-span-2">
+            {status.message}
+          </div>
+        ) : null}
         <div className="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
           <button
             type="submit"
+            disabled={status.type === "saving"}
             className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 sm:w-auto"
           >
-            <FaWhatsapp className="mr-2 h-4 w-4" />
-            Send on WhatsApp
+            <FiSend className="mr-2 h-4 w-4" />
+            {status.type === "saving" ? "Submitting..." : "Submit Enquiry"}
           </button>
           <button
             type="button"

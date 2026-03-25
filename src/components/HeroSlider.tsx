@@ -4,15 +4,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
+import { withAssetVersion } from "@/lib/assets";
 import type { SiteContent } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
 
 type HeroProps = {
   hero: SiteContent["home"]["hero"];
   contact: SiteContent["contact"];
+  assetVersion: string;
 };
 
-export default function HeroSlider({ hero, contact }: HeroProps) {
+export default function HeroSlider({ hero, contact, assetVersion }: HeroProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const slides = hero.slides.length
     ? hero.slides
@@ -46,9 +48,9 @@ export default function HeroSlider({ hero, contact }: HeroProps) {
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {slides.map((slide) => (
-            <div key={slide.src} className="relative h-full min-w-full flex-shrink-0">
+            <div key={`${slide.src}-${assetVersion}`} className="relative h-full min-w-full flex-shrink-0">
               <Image
-                src={slide.src}
+                src={withAssetVersion(slide.src, assetVersion)}
                 alt={slide.alt}
                 fill
                 sizes="100vw"
