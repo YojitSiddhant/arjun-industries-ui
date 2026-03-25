@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactElement } from "react";
 
 type GalleryItem = {
   title: string;
@@ -13,7 +13,7 @@ type GalleryClientProps = {
   items: GalleryItem[];
 };
 
-const filterIcons: Record<string, JSX.Element> = {
+const filterIcons: Record<string, ReactElement> = {
   All: (
     <svg
       className="h-4 w-4"
@@ -109,13 +109,14 @@ export default function GalleryClient({ items }: GalleryClientProps) {
 
   return (
     <>
-      <div className="flex flex-wrap gap-3">
+      <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+        <div className="flex min-w-max gap-3 sm:min-w-0 sm:flex-wrap">
         {filters.map((filter) => (
           <button
             key={filter}
             type="button"
             onClick={() => setActiveFilter(filter)}
-            className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
+            className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition duration-200 ${
               activeFilter === filter
                 ? "border-accent-300 bg-accent-50 text-accent-700"
                 : "border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
@@ -125,9 +126,10 @@ export default function GalleryClient({ items }: GalleryClientProps) {
             {filter}
           </button>
         ))}
+        </div>
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {visibleItems.map((item) => (
           <div
             key={`${item.title}-${item.image}`}

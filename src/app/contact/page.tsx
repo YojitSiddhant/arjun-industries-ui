@@ -48,7 +48,7 @@ export default async function ContactPage() {
               </p>
               <a
                 href={phoneHref}
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
+                className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5 sm:w-auto"
               >
                 <FiPhone className="h-5 w-5" />
                 Call Now
@@ -67,7 +67,7 @@ export default async function ContactPage() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-full border border-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
+                className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-emerald-500 px-5 py-3 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5 sm:w-auto"
               >
                 <FaWhatsapp className="h-5 w-5" />
                 Chat on WhatsApp
@@ -116,6 +116,7 @@ export default async function ContactPage() {
                 src={mapUrl}
                 className="h-64 w-full md:h-80"
                 loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
           </div>

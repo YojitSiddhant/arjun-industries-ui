@@ -100,13 +100,16 @@ export default async function AboutPage() {
               ))}
             </div>
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm glass-soft">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm glass-soft sm:text-left lg:text-center">
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 What we can handle
               </p>
               <ul className="mt-4 space-y-2 text-sm text-slate-600">
                 {content.about.capabilities.map((item) => (
-                  <li key={item} className="flex items-start justify-center gap-2">
+                  <li
+                    key={item}
+                    className="flex items-start justify-center gap-2 sm:justify-start lg:justify-center"
+                  >
                     <svg
                       className="mt-0.5 h-4 w-4 text-accent-500"
                       viewBox="0 0 24 24"

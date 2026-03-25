@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
+import { unstable_noStore as noStore } from "next/cache";
 
 export type SiteContent = {
   globals: {
@@ -64,12 +65,21 @@ export type SiteContent = {
 
 const contentPath = path.join(process.cwd(), "data", "siteContent.json");
 
-export async function getContent(): Promise<SiteContent> {
+async function loadFileContent(): Promise<SiteContent> {
   const raw = await fs.readFile(contentPath, "utf-8");
   return JSON.parse(raw) as SiteContent;
 }
 
-export async function saveContent(content: SiteContent): Promise<void> {
+async function saveFileContent(content: SiteContent): Promise<void> {
   await fs.mkdir(path.dirname(contentPath), { recursive: true });
   await fs.writeFile(contentPath, JSON.stringify(content, null, 2), "utf-8");
+}
+
+export async function getContent(): Promise<SiteContent> {
+  noStore();
+  return loadFileContent();
+}
+
+export async function saveContent(content: SiteContent): Promise<void> {
+  await saveFileContent(content);
 }

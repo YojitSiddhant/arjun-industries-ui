@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAdminToken } from "@/lib/adminAuth";
 import { getContent, saveContent } from "@/lib/content";
 
@@ -27,5 +28,13 @@ export async function POST(request: Request) {
   }
 
   await saveContent(body);
+
+  revalidatePath("/");
+  revalidatePath("/about");
+  revalidatePath("/services");
+  revalidatePath("/gallery");
+  revalidatePath("/contact");
+  revalidatePath("/admin");
+
   return NextResponse.json({ ok: true });
 }

@@ -35,9 +35,9 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="theme-indigo min-h-screen bg-stone-50 text-slate-800">
-      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-8">
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+    <main className="theme-indigo min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.12),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(20,184,166,0.10),_transparent_26%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] text-slate-800">
+      <div className="mx-auto flex min-h-screen w-full max-w-md flex-col justify-center px-4 py-8 sm:px-6">
+        <div className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.10)] backdrop-blur sm:p-8">
           <div className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
               Admin Login

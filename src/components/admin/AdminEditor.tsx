@@ -5,6 +5,7 @@ import type { SiteContent } from "@/lib/content";
 
 type Status = { type: "idle" | "saving" | "success" | "error"; message?: string };
 type Field = { key: string; label: string; type?: "text" | "textarea" | "lines" };
+type AdminTab = "home" | "about" | "services" | "gallery" | "contact" | "settings";
 
 const toLines = (value: string) =>
   value
@@ -151,6 +152,43 @@ const setByPath = (obj: SiteContent, path: string, value: unknown): SiteContent 
   return next as SiteContent;
 };
 
+const editorTabs: Array<{
+  id: AdminTab;
+  label: string;
+  description: string;
+}> = [
+  {
+    id: "home",
+    label: "Home",
+    description: "Hero slider, intro section, quick stats, testimonials, and homepage CTA.",
+  },
+  {
+    id: "about",
+    label: "About",
+    description: "Company overview, focus cards, and capabilities list.",
+  },
+  {
+    id: "services",
+    label: "Services",
+    description: "Service categories, descriptions, and service page call-to-action.",
+  },
+  {
+    id: "gallery",
+    label: "Gallery",
+    description: "Gallery title, categories, and all website gallery images.",
+  },
+  {
+    id: "contact",
+    label: "Contact",
+    description: "Phone, WhatsApp, address, working hours, and map coordinates.",
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    description: "Business name, logos, and footer branding details.",
+  },
+];
+
 function TextField({
   label,
   value,
@@ -161,10 +199,10 @@ function TextField({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="space-y-2 text-sm text-slate-600">
-      {label}
+    <label className="block space-y-2">
+      <span className="text-sm font-medium text-slate-700">{label}</span>
       <input
-        className="w-full rounded-2xl border border-slate-200 px-4 py-2 text-sm"
+        className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none focus:border-accent-400 focus:ring-4 focus:ring-[color:var(--accent-100)]"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       />
@@ -182,10 +220,10 @@ function TextAreaField({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="space-y-2 text-sm text-slate-600">
-      {label}
+    <label className="block space-y-2">
+      <span className="text-sm font-medium text-slate-700">{label}</span>
       <textarea
-        className="min-h-[96px] w-full rounded-2xl border border-slate-200 px-4 py-2 text-sm"
+        className="min-h-[112px] w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none focus:border-accent-400 focus:ring-4 focus:ring-[color:var(--accent-100)]"
         value={value}
         onChange={(event) => onChange(event.target.value)}
       />
@@ -209,11 +247,32 @@ function ObjectListEditor<T extends Record<string, any>>({
   renderPreview?: (item: T) => React.ReactNode;
 }) {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-slate-800">{title}</h2>
+    <section className="rounded-[28px] border border-slate-200/80 bg-white/90 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Add, edit, or remove items in this section.
+          </p>
+        </div>
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+          {items.length} item{items.length === 1 ? "" : "s"}
+        </span>
+      </div>
       <div className="mt-4 space-y-4">
         {items.map((item, index) => (
-          <div key={`${title}-${index}`} className="rounded-2xl border border-slate-200 p-4">
+          <div
+            key={`${title}-${index}`}
+            className="rounded-3xl border border-slate-200 bg-slate-50/70 p-4 shadow-sm"
+          >
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-slate-800">
+                {title} {index + 1}
+              </p>
+              <span className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-500">
+                Editable
+              </span>
+            </div>
             {renderPreview ? (
               <div className="mb-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
                 {renderPreview(item)}
@@ -267,7 +326,7 @@ function ObjectListEditor<T extends Record<string, any>>({
             <button
               type="button"
               onClick={() => onChange(items.filter((_, i) => i !== index))}
-              className="mt-3 rounded-full border border-rose-200 px-4 py-2 text-xs font-semibold text-rose-600"
+              className="mt-3 rounded-full border border-rose-200 bg-white px-4 py-2 text-xs font-semibold text-rose-600"
             >
               Remove
             </button>
@@ -276,7 +335,7 @@ function ObjectListEditor<T extends Record<string, any>>({
         <button
           type="button"
           onClick={() => onChange([...items, createItem()])}
-          className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600"
+          className="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-sm"
         >
           Add item
         </button>
@@ -289,9 +348,13 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
   const [content, setContent] = useState<SiteContent>(initialContent);
   const [status, setStatus] = useState<Status>({ type: "idle" });
   const [uploading, setUploading] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<
-    "home" | "about" | "services" | "gallery" | "contact" | "settings"
-  >("home");
+  const [activeTab, setActiveTab] = useState<AdminTab>("home");
+  const [savedSnapshot, setSavedSnapshot] = useState(() =>
+    JSON.stringify(initialContent)
+  );
+  const hasUnsavedChanges = JSON.stringify(content) !== savedSnapshot;
+  const activeTabMeta =
+    editorTabs.find((tab) => tab.id === activeTab) ?? editorTabs[0];
 
   const saveContent = async () => {
     setStatus({ type: "saving" });
@@ -311,6 +374,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
     }
 
     setStatus({ type: "success", message: "Content saved successfully." });
+    setSavedSnapshot(JSON.stringify(content));
     setTimeout(() => setStatus({ type: "idle" }), 2000);
   };
 
@@ -339,72 +403,139 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold text-slate-800">
-            Website Content Manager
-          </h1>
-          <p className="text-sm text-slate-600">
-            Update text, services, gallery, and contact details without touching code.
-          </p>
+      <section className="overflow-hidden rounded-[32px] border border-slate-200/80 bg-[linear-gradient(135deg,#ffffff_0%,#eef2ff_48%,#ecfeff_100%)] p-6 shadow-[0_22px_60px_rgba(15,23,42,0.10)] sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-5">
+          <div className="max-w-2xl">
+            <span className="rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-500 shadow-sm">
+              Website Owner Panel
+            </span>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+              Website Content Manager
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
+              Update text, images, contact details, and branding from one place.
+              Open a section on the left, make your changes, and click save when you are done.
+            </p>
+          </div>
+          <div className="grid min-w-[260px] gap-3 rounded-3xl border border-white/70 bg-white/75 p-4 shadow-sm backdrop-blur">
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-2xl bg-slate-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  Slider Images
+                </p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900">
+                  {content.home.hero.slides.length}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-slate-50 p-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                  Gallery Images
+                </p>
+                <p className="mt-2 text-2xl font-semibold text-slate-900">
+                  {content.gallery.items.length}
+                </p>
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600">
+              <span
+                className={`mr-2 inline-block h-2.5 w-2.5 rounded-full ${
+                  hasUnsavedChanges ? "bg-amber-500" : "bg-emerald-500"
+                }`}
+              />
+              {hasUnsavedChanges
+                ? "You have unsaved edits."
+                : "All changes are saved."}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="mt-6 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={saveContent}
-            className="rounded-full bg-accent-500 px-6 py-2 text-sm font-semibold text-white transition hover-bg-accent-600"
+            className="rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover-bg-accent-600 disabled-bg-accent-300"
+            disabled={status.type === "saving"}
           >
             {status.type === "saving" ? "Saving..." : "Save Changes"}
           </button>
           <button
             type="button"
             onClick={handleLogout}
-            className="rounded-full border border-slate-200 px-6 py-2 text-sm font-semibold text-slate-600 transition hover:border-rose-300 hover:text-rose-600"
+            className="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-600 transition hover:border-rose-300 hover:text-rose-600"
           >
             Log Out
           </button>
         </div>
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {[
-          { id: "home", label: "Home" },
-          { id: "about", label: "About" },
-          { id: "services", label: "Services" },
-          { id: "gallery", label: "Gallery" },
-          { id: "contact", label: "Contact" },
-          { id: "settings", label: "Settings" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id as typeof activeTab)}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-              activeTab === tab.id
-                ? "bg-accent-500 text-white"
-                : "border border-slate-200 text-slate-600 hover-border-accent-300 hover-text-accent-700"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      </section>
 
       {status.type === "error" ? (
-        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 shadow-sm">
           {status.message}
         </div>
       ) : null}
       {status.type === "success" ? (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 shadow-sm">
           {status.message}
         </div>
       ) : null}
       {uploading ? (
-        <div className="rounded-2xl border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-700">
+        <div className="rounded-2xl border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-700 shadow-sm">
           {uploading}
         </div>
       ) : null}
+
+      <div className="grid gap-6 xl:grid-cols-[280px,1fr]">
+        <aside className="xl:sticky xl:top-6 xl:self-start">
+          <div className="rounded-[28px] border border-slate-200/80 bg-white/90 p-4 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+            <p className="px-2 text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+              Sections
+            </p>
+            <div className="mt-4 space-y-2">
+              {editorTabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full rounded-2xl border px-4 py-4 text-left transition ${
+                    activeTab === tab.id
+                      ? "border-accent-300 bg-accent-50 text-accent-700 shadow-sm"
+                      : "border-slate-200 bg-white text-slate-600 hover-border-accent-300 hover-text-accent-700"
+                  }`}
+                >
+                  <div className="text-sm font-semibold">{tab.label}</div>
+                  <div className="mt-1 text-xs leading-5 text-inherit/80">
+                    {tab.description}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
+              <p className="font-semibold text-slate-800">How to use</p>
+              <p className="mt-2 leading-6">
+                Upload new images inside Home or Gallery, review the preview cards, then save once.
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        <div className="space-y-6">
+          <section className="rounded-[28px] border border-slate-200/80 bg-white/90 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                  Current Section
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold text-slate-900">
+                  {activeTabMeta.label}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+                  {activeTabMeta.description}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                Save after making all edits in this section.
+              </div>
+            </div>
+          </section>
 
       {activeTab === "settings" ? (
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -1121,6 +1252,8 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
           </div>
         </section>
       ) : null}
+        </div>
+      </div>
     </div>
   );
 }

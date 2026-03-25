@@ -50,7 +50,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
   };
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft">
+    <section className="rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm transition duration-200 hover:shadow-md glass-soft sm:p-6">
       <div className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
           Quick Enquiry
@@ -67,7 +67,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
         <label className="text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
           Name
           <input
-            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-center text-sm outline-none placeholder:text-center transition focus-border-accent-400"
+            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm outline-none transition focus-border-accent-400"
             value={form.name}
             onChange={(event) => updateField("name", event.target.value)}
             placeholder="Your full name"
@@ -77,7 +77,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
         <label className="text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
           Phone
           <input
-            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-center text-sm outline-none placeholder:text-center transition focus-border-accent-400"
+            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm outline-none transition focus-border-accent-400"
             value={form.phone}
             onChange={(event) => updateField("phone", event.target.value)}
             placeholder="+91 XXXXX XXXXX"
@@ -87,7 +87,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
         <label className="text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
           Project Type
           <select
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-center text-sm outline-none transition focus-border-accent-400"
+            className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm outline-none transition focus-border-accent-400"
             value={form.projectType}
             onChange={(event) => updateField("projectType", event.target.value)}
           >
@@ -101,7 +101,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
         <label className="text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
           Location
           <input
-            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-center text-sm outline-none placeholder:text-center transition focus-border-accent-400"
+            className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm outline-none transition focus-border-accent-400"
             value={form.location}
             onChange={(event) => updateField("location", event.target.value)}
             placeholder="City or site location"
@@ -110,16 +110,16 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
         <label className="md:col-span-2 text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
           Message
           <textarea
-            className="mt-2 min-h-[120px] w-full rounded-2xl border border-slate-200 px-4 py-3 text-center text-sm outline-none placeholder:text-center transition focus-border-accent-400"
+            className="mt-2 min-h-[120px] w-full rounded-2xl border border-slate-200 px-4 py-3 text-left text-sm outline-none transition focus-border-accent-400"
             value={form.message}
             onChange={(event) => updateField("message", event.target.value)}
             placeholder="Share measurements or details"
           />
         </label>
-        <div className="md:col-span-2 flex flex-wrap justify-center gap-3">
+        <div className="md:col-span-2 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
           <button
             type="submit"
-            className="inline-flex items-center justify-center rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 sm:w-auto"
           >
             <FaWhatsapp className="mr-2 h-4 w-4" />
             Send on WhatsApp
@@ -127,7 +127,7 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
           <button
             type="button"
             onClick={() => setForm(initialState)}
-            className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition hover-border-accent-300 hover-text-accent-700"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-600 transition hover-border-accent-300 hover-text-accent-700 sm:w-auto"
           >
             <FiRefreshCw className="mr-2 h-4 w-4" />
             Reset

@@ -72,7 +72,7 @@ export default async function Home() {
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 lg:grid-cols-[1.3fr,1fr]">
-            <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-sm glass-soft md:text-left">
+            <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm glass-soft sm:p-6 md:text-left">
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 {content.home.intro.eyebrow}
               </span>
@@ -82,17 +82,17 @@ export default async function Home() {
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
                 {content.home.intro.subtitle}
               </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-3 md:justify-start">
+              <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row md:justify-start">
                 <a
                   href={phoneHref}
-                  className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-5 py-2 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-500 px-5 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
                 >
                   <FiPhone className="h-4 w-4" />
                   {content.home.hero.ctaPhoneLabel}
                 </a>
                 <a
                   href={whatsappHref}
-                  className="inline-flex items-center gap-2 rounded-full border border-emerald-500 px-5 py-2 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-emerald-500 px-5 py-3 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
                 >
                   <FaWhatsapp className="h-4 w-4" />
                   {content.home.hero.ctaWhatsappLabel}
@@ -126,7 +126,7 @@ export default async function Home() {
 
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm glass-soft md:text-left">
+          <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm glass-soft sm:p-8 md:text-left">
             <div className="flex flex-col gap-3 md:items-start">
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 What we fabricate
@@ -161,7 +161,7 @@ export default async function Home() {
 
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-up rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm glass-soft md:text-left">
+          <div className="animate-fade-up rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm glass-soft sm:p-8 md:text-left">
             <div className="flex flex-col items-center gap-3 md:flex-row md:items-center">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-accent-200 bg-accent-50 text-accent-600">
                 <svg
@@ -179,20 +179,18 @@ export default async function Home() {
                   <path d="M3 17h18" />
                 </svg>
               </span>
-              <h2 className="text-2xl font-semibold text-slate-800">
-              Areas we serve
-            </h2>
-          </div>
-          <p className="mt-3 text-sm text-slate-600">
-            {content.home.coverageAreas.join(", ")}.
-          </p>
-          <div className="mt-5 flex flex-wrap justify-center gap-3 md:justify-start">
-            {content.home.coverageAreas.map((area) => (
-              <span
-                key={area}
+              <h2 className="text-2xl font-semibold text-slate-800">Areas we serve</h2>
+            </div>
+            <p className="mt-3 text-sm text-slate-600">
+              {content.home.coverageAreas.join(", ")}.
+            </p>
+            <div className="mt-5 flex flex-wrap justify-center gap-3 md:justify-start">
+              {content.home.coverageAreas.map((area) => (
+                <span
+                  key={area}
                   className="rounded-full border border-slate-200 px-4 py-2 text-xs font-medium text-slate-600 transition duration-200 hover-border-accent-300 hover-text-accent-700 glass-soft"
-              >
-                {area}
+                >
+                  {area}
                 </span>
               ))}
             </div>
@@ -208,7 +206,7 @@ export default async function Home() {
 
       <section className="py-8">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm glass-soft md:text-left">
+          <div className="animate-fade-in rounded-3xl border border-slate-200 bg-white p-5 text-center shadow-sm glass-soft sm:p-8 md:text-left">
             <div className="flex flex-col gap-3 md:items-start">
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 Testimonials
@@ -247,17 +245,17 @@ export default async function Home() {
               {content.home.cta}
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
+          <div className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
             <a
               href={phoneHref}
-              className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover-bg-accent-600 hover:-translate-y-0.5"
             >
               <FiPhone className="h-4 w-4" />
               Call
             </a>
             <a
               href={whatsappHref}
-              className="inline-flex items-center gap-2 rounded-full border border-emerald-500 px-6 py-3 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-emerald-500 px-6 py-3 text-sm font-semibold text-emerald-600 transition duration-200 hover:bg-emerald-500 hover:text-white hover:-translate-y-0.5"
             >
               <FaWhatsapp className="h-4 w-4" />
               WhatsApp

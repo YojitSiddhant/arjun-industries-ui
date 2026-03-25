@@ -30,13 +30,13 @@ export default function Navbar({
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white text-slate-800 shadow-sm">
-      <div className="mx-auto flex w-full max-w-6xl items-center px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="mx-auto flex items-center gap-2 text-base font-semibold text-slate-800 transition hover-text-accent-600 md:mx-0"
+          className="flex min-w-0 max-w-[calc(100%-3.5rem)] items-center gap-2 text-base font-semibold text-slate-800 transition hover-text-accent-600 md:max-w-none"
         >
           {logoPath ? (
-            <span className="flex h-12 w-12 items-center justify-center">
+            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center sm:h-12 sm:w-12">
               <img
                 src={logoPath}
                 alt={`${businessName} logo`}
@@ -45,9 +45,9 @@ export default function Navbar({
               />
             </span>
           ) : (
-            <FiTool className="h-4 w-4 text-accent-600" />
+            <FiTool className="h-4 w-4 flex-shrink-0 text-accent-600" />
           )}
-          {businessName}
+          <span className="truncate text-sm sm:text-base">{businessName}</span>
         </Link>
 
         <div className="hidden items-center gap-6 md:ml-auto md:flex">
@@ -79,7 +79,7 @@ export default function Navbar({
 
         <button
           type="button"
-          className="absolute right-4 inline-flex items-center justify-center rounded-md border border-slate-200 p-2 text-slate-600 transition duration-200 hover-border-accent-300 hover-text-accent-600 md:static md:ml-auto md:hidden"
+          className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md border border-slate-200 p-2 text-slate-600 transition duration-200 hover-border-accent-300 hover-text-accent-600 md:ml-auto md:hidden"
           aria-label="Toggle menu"
           onClick={() => setMenuOpen((prev) => !prev)}
         >
@@ -92,7 +92,7 @@ export default function Navbar({
           menuOpen ? "max-h-96 border-t border-slate-200" : "max-h-0"
         } overflow-hidden glass-soft transition-all duration-300`}
       >
-        <div className="flex flex-col items-center gap-2 px-4 py-4 sm:px-6">
+        <div className="flex flex-col items-stretch gap-2 px-4 py-4 sm:px-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.href);
@@ -100,7 +100,7 @@ export default function Navbar({
               <Link
                 key={link.href}
                 href={link.href}
-                className={`group flex w-full items-center justify-center gap-2 rounded-md px-2 py-2 text-sm transition duration-200 ${
+                className={`group flex w-full items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm transition duration-200 ${
                   active
                     ? "bg-accent-50 text-accent-700"
                     : "text-slate-800 hover-bg-accent-50 hover-text-accent-600"
