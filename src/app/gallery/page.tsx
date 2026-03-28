@@ -2,6 +2,20 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryClient from "@/components/GalleryClient";
 import { getContent, getContentVersion } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Fabrication Project Gallery",
+  description:
+    "See recent Arjun Industries fabrication work including sheds, structural metal projects, farm equipment, and on-site repair jobs.",
+  path: "/gallery",
+  keywords: [
+    "fabrication gallery",
+    "welding project photos",
+    "shed work images",
+    "metal fabrication portfolio",
+  ],
+});
 
 export default async function GalleryPage() {
   const content = await getContent();

@@ -5,6 +5,20 @@ import { FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Contact Arjun Industries",
+  description:
+    "Contact Arjun Industries in Bhopal for fabrication, welding, sheds, gates, grills, and farm equipment work. Call or WhatsApp for a quick estimate.",
+  path: "/contact",
+  keywords: [
+    "contact Arjun Industries",
+    "fabrication contact Bhopal",
+    "welding company phone number",
+    "WhatsApp fabrication enquiry",
+  ],
+});
 
 export default async function ContactPage() {
   const content = await getContent();
@@ -91,7 +105,7 @@ export default async function ContactPage() {
 
       <section className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <ContactLeadForm whatsappNumber={content.contact.whatsapp} />
+          <ContactLeadForm />
         </div>
       </section>
 

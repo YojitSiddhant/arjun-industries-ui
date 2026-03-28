@@ -1,12 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { FiRefreshCw, FiSend } from "react-icons/fi";
-import { toWhatsAppHref } from "@/lib/format";
-
-type ContactLeadFormProps = {
-  whatsappNumber: string;
-};
 
 type FormState = {
   name: string;
@@ -24,14 +19,12 @@ const initialState: FormState = {
   message: "",
 };
 
-export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps) {
+export default function ContactLeadForm() {
   const [form, setForm] = useState<FormState>(initialState);
   const [status, setStatus] = useState<{
-    type: "idle" | "saving" | "error";
+    type: "idle" | "saving" | "success" | "error";
     message?: string;
   }>({ type: "idle" });
-
-  const whatsappLink = useMemo(() => toWhatsAppHref(whatsappNumber), [whatsappNumber]);
 
   const updateField = (key: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -56,18 +49,10 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
       return;
     }
 
-    const lines = [
-      "New enquiry from website",
-      `Name: ${form.name}`,
-      `Phone: ${form.phone}`,
-      `Project: ${form.projectType}`,
-      `Location: ${form.location || "Not provided"}`,
-      `Details: ${form.message || "Not provided"}`,
-    ];
-    const text = encodeURIComponent(lines.join("\n"));
-    const url = `${whatsappLink}?text=${text}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-    setStatus({ type: "idle" });
+    setStatus({
+      type: "success",
+      message: "Enquiry submitted successfully. We will contact you soon.",
+    });
     setForm(initialState);
   };
 
@@ -84,6 +69,16 @@ export default function ContactLeadForm({ whatsappNumber }: ContactLeadFormProps
           Fill the details and submit your enquiry for a quick estimate.
         </p>
       </div>
+
+      {status.type === "success" ? (
+        <div
+          role="alert"
+          aria-live="polite"
+          className="mt-6 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700"
+        >
+          {status.message}
+        </div>
+      ) : null}
 
       <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
         <label className="text-left text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">

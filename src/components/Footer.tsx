@@ -108,7 +108,20 @@ export default function Footer({ globals, contact, assetVersion }: FooterProps) 
 
         <div className="mt-10 flex flex-col gap-2 border-t border-slate-200 pt-6 text-center text-xs text-slate-500 md:flex-row md:items-center md:justify-between md:text-left">
           <p>{globals.copyright}</p>
-          <p>{globals.footerNote}</p>
+          <div className="flex flex-col gap-2 md:items-end">
+            <p>{globals.footerNote}</p>
+            <p>
+              Website by{" "}
+              <a
+                href="https://techvantalabs.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-slate-700 transition hover-text-accent-600"
+              >
+                TechVanta Labs Pvt Ltd
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

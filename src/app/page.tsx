@@ -6,6 +6,20 @@ import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Welding, Metal and Fabrication Services in Bhopal",
+  description:
+    "Arjun Industries builds industrial sheds, gates, grills, repair work, and farm equipment with on-site support across Bhopal and nearby areas.",
+  keywords: [
+    "welding services Bhopal",
+    "fabrication services Bhopal",
+    "industrial shed fabrication",
+    "custom metal work",
+    "farm equipment repair",
+  ],
+});
 
 const quickStatIcons = [
   <svg
@@ -82,9 +96,9 @@ export default async function Home() {
               <span className="text-xs font-semibold uppercase tracking-[0.3em] text-accent-600">
                 {content.home.intro.eyebrow}
               </span>
-              <h1 className="mt-3 text-2xl font-semibold text-slate-800 sm:text-3xl">
+              <h2 className="mt-3 text-2xl font-semibold text-slate-800 sm:text-3xl">
                 {content.home.intro.title}
-              </h1>
+              </h2>
               <p className="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
                 {content.home.intro.subtitle}
               </p>
@@ -227,7 +241,9 @@ export default async function Home() {
                   key={item.name}
                   className="flex h-full flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover-border-accent-300 hover:shadow-md glass-soft"
                 >
-                  <p className="flex-1 text-sm text-slate-600">"{item.quote}"</p>
+                  <p className="flex-1 text-sm text-slate-600">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
                   <div className="mt-4">
                     <p className="text-sm font-semibold text-slate-800">
                       {item.name}

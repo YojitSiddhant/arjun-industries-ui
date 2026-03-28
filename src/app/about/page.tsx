@@ -1,6 +1,19 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getContent, getContentVersion } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "About Our Fabrication Workshop in Bhopal",
+  description:
+    "Learn about Arjun Industries, a Bhopal fabrication workshop handling welding, metal structures, custom gates, sheds, and agricultural equipment work.",
+  path: "/about",
+  keywords: [
+    "about Arjun Industries",
+    "fabrication workshop Bhopal",
+    "metal work company Bhopal",
+  ],
+});
 
 const focusIcons = [
   <svg

@@ -1,49 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arjun Industries Website
 
-## Getting Started
+This is a Next.js website with a connected admin panel.
 
-First, run the development server:
+Public pages:
+- `/`
+- `/about`
+- `/services`
+- `/gallery`
+- `/contact`
+
+Admin pages:
+- `/admin/login`
+- `/admin`
+
+## Environment
+
+Create a local env file from `.env.example` and set real values:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Required env vars:
+- `ADMIN_PASSWORD`
+- `ADMIN_TOKEN`
+- `NEXT_PUBLIC_SITE_URL`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies and start the dev server:
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000`.
 
 ## Admin Panel
 
-The site now includes a custom admin panel for content updates.
+Login path:
 
-1. Create `.env.local` and set:
-   - `ADMIN_PASSWORD=your-strong-password`
-   - `ADMIN_TOKEN=your-random-token`
-2. Run the dev server and open `http://localhost:3000/admin/login`.
-3. Update content and click "Save Changes".
+```bash
+http://localhost:3000/admin/login
+```
 
-Content is stored in `data/siteContent.json`. The admin panel updates this file.
-Uploaded images are saved to `public/uploads` and can be selected from the admin panel.
+What the admin panel updates:
+- Website content in `data/siteContent.json`
+- Enquiries in `data/enquiries.json`
+- Uploaded images in `public/uploads`
 
-## Learn More
+The website reads from the same files, so admin updates are reflected on the site.
 
-To learn more about Next.js, take a look at the following resources:
+## Production Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project must be hosted as a real Node.js app.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Production commands:
 
-## Deploy on Vercel
+```bash
+npm install
+npm run build
+npm run start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Important Hosting Requirement
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The hosting environment must support persistent writable storage.
+
+Why:
+- Admin content updates write to `data/siteContent.json`
+- Contact enquiries write to `data/enquiries.json`
+- Image uploads write to `public/uploads`
+
+If the server filesystem is read-only or temporary, admin changes will not persist after restart or redeploy.
+
+Recommended hosting:
+- VPS
+- dedicated server
+- VM
+- Docker container with persistent mounted volumes
+
+Persist these folders in production:
+- `data/`
+- `public/uploads/`
+
+## Handoff Checklist
+
+Before going live, verify all of the following:
+- the public website opens correctly
+- `/admin/login` opens correctly
+- admin login works with the configured password
+- editing content in admin updates the website
+- uploading images in admin works
+- submitting the contact form creates a new enquiry
+- deleting an enquiry works
+- the `Call` button in enquiries works on supported devices
+
+## Build Status
+
+The project builds successfully with:
+
+```bash
+npm run build
+```

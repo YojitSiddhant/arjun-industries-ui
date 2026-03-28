@@ -17,16 +17,16 @@
       "ctaWhatsappLabel": "WhatsApp Enquiry",
       "slides": [
         {
-          "src": "/uploads/upload-1772678278490-a6vaq5h3e3.jpg",
-          "alt": "IMG_20250824_102325.jpg"
+          "src": "/uploads/upload-1774696291895-oqdidjo2amd.webp",
+          "alt": "1.webp"
         },
         {
-          "src": "/uploads/upload-1772678287163-uy0n0awodz.jpg",
-          "alt": "test.jpg"
+          "src": "/uploads/upload-1774696519246-yduxiuu734g.webp",
+          "alt": "2.webp"
         },
         {
-          "src": "/hero/hero3.jpg",
-          "alt": "Welding work 3"
+          "src": "/uploads/upload-1774696567932-wviln28nz.webp",
+          "alt": "3.webp"
         }
       ]
     },
@@ -212,27 +212,32 @@
       {
         "title": "Industrial shed framing",
         "category": "Sheds",
-        "image": "/gallery/gallery1.jpg"
+        "image": "/uploads/upload-1774696744019-41u2z1dfuj9.webp"
       },
       {
         "title": "Warehouse tin shed",
         "category": "Sheds",
-        "image": "/gallery/gallery2.jpg"
+        "image": "/uploads/upload-1774696776900-py05x6ahve.webp"
       },
       {
         "title": "Tractor trolley build",
         "category": "Farm equipment",
-        "image": "/gallery/gallery5.jpg"
+        "image": "/uploads/upload-1774696865449-js3epxl0q6.webp"
       },
       {
         "title": "Water tanker fabrication",
         "category": "Farm equipment",
-        "image": "/gallery/gallery6.jpg"
+        "image": "/uploads/upload-1774696926250-17r7ltx9upz.webp"
       },
       {
         "title": "On-site repair work",
         "category": "Other",
-        "image": "/gallery/gallery1.jpg"
+        "image": "/uploads/upload-1774696991483-byslchu9wh.webp"
+      },
+      {
+        "title": "Other",
+        "category": "Steel Door's",
+        "image": "/uploads/upload-1774697051810-pv43c72bjn.jpg"
       }
     ]
   },

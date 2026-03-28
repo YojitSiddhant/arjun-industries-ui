@@ -4,6 +4,20 @@ import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata = buildPageMetadata({
+  title: "Shed, Gate and Welding Services",
+  description:
+    "Explore Arjun Industries services including industrial sheds, warehouse fabrication, gates, grills, railings, farm equipment, and repair work in Bhopal.",
+  path: "/services",
+  keywords: [
+    "shed fabrication Bhopal",
+    "gate grill fabrication",
+    "warehouse structure work",
+    "welding repair services",
+  ],
+});
 
 const serviceIcons = [
   <svg

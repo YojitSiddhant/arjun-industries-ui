@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SiteContent } from "@/lib/content";
 import type { Enquiry } from "@/lib/enquiries";
+import { toPhoneHref } from "@/lib/format";
 
 type Status = { type: "idle" | "saving" | "success" | "error"; message?: string };
 type Field = { key: string; label: string; type?: "text" | "textarea" | "lines" };
@@ -434,6 +435,30 @@ export default function AdminEditor({
     const data = (await response.json()) as Enquiry[];
     setEnquiries(data);
     setLoadingEnquiries(false);
+  };
+
+  const deleteEnquiry = async (id: string) => {
+    const confirmed = window.confirm("Delete this enquiry?");
+    if (!confirmed) return;
+
+    const response = await fetch("/api/admin/enquiries", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => ({}));
+      setStatus({
+        type: "error",
+        message: data?.message ?? "Could not delete enquiry.",
+      });
+      return;
+    }
+
+    setEnquiries((prev) => prev.filter((enquiry) => enquiry.id !== id));
+    setStatus({ type: "success", message: "Enquiry deleted successfully." });
+    setTimeout(() => setStatus({ type: "idle" }), 2000);
   };
 
   return (
@@ -1329,11 +1354,29 @@ export default function AdminEditor({
                       <h3 className="text-base font-semibold text-slate-900">
                         {enquiry.name}
                       </h3>
-                      <p className="mt-1 text-sm text-slate-500">{enquiry.phone}</p>
+                      <div className="mt-2 flex flex-wrap items-center gap-3">
+                        <p className="text-sm text-slate-500">{enquiry.phone}</p>
+                        <a
+                          href={toPhoneHref(enquiry.phone)}
+                          className="inline-flex min-h-10 items-center justify-center rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50"
+                        >
+                          Call
+                        </a>
+                      </div>
                     </div>
-                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                      {new Date(enquiry.createdAt).toLocaleString()}
-                    </span>
+                    <div className="flex items-start gap-2">
+                      <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                        {new Date(enquiry.createdAt).toLocaleString()}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => deleteEnquiry(enquiry.id)}
+                        aria-label={`Delete enquiry from ${enquiry.name}`}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-rose-200 bg-white text-sm font-semibold text-rose-600 transition hover:border-rose-300 hover:bg-rose-50"
+                      >
+                        ×
+                      </button>
+                    </div>
                   </div>
 
                   <div className="mt-4 grid gap-3 md:grid-cols-2">

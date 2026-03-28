@@ -51,3 +51,15 @@ export async function addEnquiry(
 
   return nextEntry;
 }
+
+export async function removeEnquiry(id: string): Promise<boolean> {
+  const existing = await getEnquiries();
+  const next = existing.filter((enquiry) => enquiry.id !== id);
+
+  if (next.length === existing.length) {
+    return false;
+  }
+
+  await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
+  return true;
+}

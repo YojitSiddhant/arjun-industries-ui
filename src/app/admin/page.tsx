@@ -1,8 +1,24 @@
 import AdminEditor from "@/components/admin/AdminEditor";
+import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
 import { getEnquiries } from "@/lib/enquiries";
+import { isAdminAuthenticated } from "@/lib/adminSession";
+import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: "Admin",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function AdminPage() {
+  const isAuthenticated = await isAdminAuthenticated();
+  if (!isAuthenticated) {
+    redirect("/admin/login?next=/admin");
+  }
+
   const content = await getContent();
   const enquiries = await getEnquiries();
 
