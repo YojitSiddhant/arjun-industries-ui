@@ -85,6 +85,70 @@ Persist these folders in production:
 - `data/`
 - `public/uploads/`
 
+## Docker Deployment
+
+This repository includes a production-oriented Docker setup for the existing Next.js application.
+
+### Included files
+
+- `Dockerfile`
+- `docker-compose.yml`
+- `.dockerignore`
+
+### Prepare environment variables
+
+Create a real `.env` file before running Compose:
+
+```bash
+cp .env.example .env
+```
+
+Required values:
+- `ADMIN_PASSWORD`
+- `ADMIN_TOKEN`
+- `NEXT_PUBLIC_SITE_URL`
+
+Do not commit `.env`, `.env.local`, or any real secret values.
+
+### Docker Compose commands
+
+Build and start the app:
+
+```bash
+docker compose up --build
+```
+
+Run in detached mode:
+
+```bash
+docker compose up -d
+```
+
+Stop the app:
+
+```bash
+docker compose down
+```
+
+Follow logs:
+
+```bash
+docker compose logs -f
+```
+
+Rebuild after code changes:
+
+```bash
+docker compose up --build
+```
+
+### Docker notes
+
+- The container runs the app in production mode on port `3000`.
+- The Docker image uses a multi-stage build and the Next.js standalone output to keep the runtime image smaller.
+- `docker-compose.yml` mounts `data/` and `public/uploads/` so admin content changes, enquiries, and uploaded images persist across restarts.
+- If you deploy without Compose, you still need persistent storage for `data/` and `public/uploads/`.
+
 ## Handoff Checklist
 
 Before going live, verify all of the following:
