@@ -26,6 +26,9 @@ Required env vars:
 - `ADMIN_TOKEN`
 - `NEXT_PUBLIC_SITE_URL`
 
+Default admin password:
+- `123`
+
 ## Local Run
 
 Install dependencies and start the dev server:
@@ -44,6 +47,9 @@ Login path:
 ```bash
 http://localhost:3000/admin/login
 ```
+
+The admin panel uses only a password field. Current password:
+- `123`
 
 What the admin panel updates:
 - Website content in `data/siteContent.json`

@@ -1,5 +1,5 @@
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD ?? "admin123";
+  return process.env.ADMIN_PASSWORD ?? "123";
 }
 
 export function getAdminToken(): string {
