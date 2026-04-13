@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { unstable_noStore as noStore } from "next/cache";
+import { hasBlobStorage, readJsonBlob, writeJsonBlob } from "@/lib/storage";
 
 export type Enquiry = {
   id: string;
@@ -13,6 +14,7 @@ export type Enquiry = {
 };
 
 const enquiriesPath = path.join(process.cwd(), "data", "enquiries.json");
+const enquiriesBlobPath = "data/enquiries.json";
 
 async function ensureEnquiriesFile() {
   await fs.mkdir(path.dirname(enquiriesPath), { recursive: true });
@@ -25,6 +27,13 @@ async function ensureEnquiriesFile() {
 
 export async function getEnquiries(): Promise<Enquiry[]> {
   noStore();
+  const blobEnquiries = await readJsonBlob<Enquiry[]>(enquiriesBlobPath);
+  if (blobEnquiries) {
+    return blobEnquiries.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  }
+
   await ensureEnquiriesFile();
   const raw = await fs.readFile(enquiriesPath, "utf-8");
   const parsed = JSON.parse(raw) as Enquiry[];
@@ -43,11 +52,13 @@ export async function addEnquiry(
     createdAt: new Date().toISOString(),
   };
 
-  await fs.writeFile(
-    enquiriesPath,
-    JSON.stringify([nextEntry, ...existing], null, 2),
-    "utf-8"
-  );
+  const next = [nextEntry, ...existing];
+
+  if (hasBlobStorage()) {
+    await writeJsonBlob(enquiriesBlobPath, next);
+  } else {
+    await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
+  }
 
   return nextEntry;
 }
@@ -60,6 +71,11 @@ export async function removeEnquiry(id: string): Promise<boolean> {
     return false;
   }
 
-  await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
+  if (hasBlobStorage()) {
+    await writeJsonBlob(enquiriesBlobPath, next);
+  } else {
+    await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
+  }
+
   return true;
 }

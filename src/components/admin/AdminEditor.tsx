@@ -7,6 +7,7 @@ import { toPhoneHref } from "@/lib/format";
 
 type Status = { type: "idle" | "saving" | "success" | "error"; message?: string };
 type Field = { key: string; label: string; type?: "text" | "textarea" | "lines" };
+type EditableValue = string | string[] | undefined;
 type AdminTab =
   | "home"
   | "about"
@@ -150,15 +151,18 @@ const prepareLogoFile = async (file: File): Promise<File> => {
 
 const setByPath = (obj: SiteContent, path: string, value: unknown): SiteContent => {
   const parts = path.split(".");
-  const next: any = Array.isArray(obj) ? [...obj] : { ...obj };
-  let cursor: any = next;
+  const next = structuredClone(obj);
+  let cursor = next as unknown as Record<string, unknown>;
   for (let i = 0; i < parts.length - 1; i += 1) {
     const key = parts[i];
-    cursor[key] = Array.isArray(cursor[key]) ? [...cursor[key]] : { ...cursor[key] };
-    cursor = cursor[key];
+    const current = cursor[key];
+    cursor[key] = Array.isArray(current)
+      ? [...current]
+      : { ...(current as Record<string, unknown>) };
+    cursor = cursor[key] as Record<string, unknown>;
   }
   cursor[parts[parts.length - 1]] = value;
-  return next as SiteContent;
+  return next;
 };
 
 const editorTabs: Array<{
@@ -245,7 +249,7 @@ function TextAreaField({
   );
 }
 
-function ObjectListEditor<T extends Record<string, any>>({
+function ObjectListEditor<T extends Record<string, EditableValue>>({
   title,
   items,
   fields,
@@ -314,7 +318,7 @@ function ObjectListEditor<T extends Record<string, any>>({
                     <TextAreaField
                       key={field.key}
                       label={`${field.label} (one per line)`}
-                      value={fromLines(value)}
+                      value={fromLines(Array.isArray(value) ? value : [])}
                       onChange={(nextValue) => {
                         const next = [...items];
                         next[index] = { ...next[index], [field.key]: toLines(nextValue) };
@@ -1415,5 +1419,4 @@ export default function AdminEditor({
     </div>
   );
 }
-
 

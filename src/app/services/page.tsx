@@ -4,7 +4,11 @@ import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  buildBreadcrumbSchema,
+  buildPageMetadata,
+  buildServiceListSchema,
+} from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "Shed, Gate and Welding Services",
@@ -17,6 +21,8 @@ export const metadata = buildPageMetadata({
     "warehouse structure work",
     "welding repair services",
   ],
+  image: "/uploads/upload-1774696744019-41u2z1dfuj9.webp",
+  imageAlt: "Industrial shed fabrication by Arjun Industries",
 });
 
 const serviceIcons = [
@@ -101,9 +107,26 @@ export default async function ServicesPage() {
   const assetVersion = await getContentVersion();
   const phoneHref = toPhoneHref(content.contact.phone);
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services" },
+  ]);
+  const serviceListSchema = buildServiceListSchema(content);
 
   return (
     <main className="theme-emerald bg-stone-50 text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceListSchema),
+        }}
+      />
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
@@ -190,6 +213,5 @@ export default async function ServicesPage() {
     </main>
   );
 }
-
 
 

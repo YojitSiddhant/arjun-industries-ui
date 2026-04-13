@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getContent, getContentVersion } from "@/lib/content";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildPageMetadata } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "About Our Fabrication Workshop in Bhopal",
@@ -13,6 +13,8 @@ export const metadata = buildPageMetadata({
     "fabrication workshop Bhopal",
     "metal work company Bhopal",
   ],
+  image: "/uploads/upload-1774696519246-yduxiuu734g.webp",
+  imageAlt: "Arjun Industries fabrication workshop in Bhopal",
 });
 
 const focusIcons = [
@@ -63,9 +65,19 @@ const focusIcons = [
 export default async function AboutPage() {
   const content = await getContent();
   const assetVersion = await getContentVersion();
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+  ]);
 
   return (
     <main className="theme-amber bg-stone-50 text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
@@ -154,6 +166,5 @@ export default async function AboutPage() {
     </main>
   );
 }
-
 
 

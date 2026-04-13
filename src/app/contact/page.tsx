@@ -5,7 +5,7 @@ import { FiPhone, FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildPageMetadata, getSiteUrl } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "Contact Arjun Industries",
@@ -18,6 +18,8 @@ export const metadata = buildPageMetadata({
     "welding company phone number",
     "WhatsApp fabrication enquiry",
   ],
+  image: "/uploads/upload-1774696991483-byslchu9wh.webp",
+  imageAlt: "On-site welding and repair work by Arjun Industries",
 });
 
 export default async function ContactPage() {
@@ -26,9 +28,37 @@ export default async function ContactPage() {
   const phoneHref = toPhoneHref(content.contact.phone);
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
   const mapUrl = `https://www.google.com/maps?q=${content.contact.mapLat},${content.contact.mapLng}&z=17&output=embed`;
+  const siteUrl = getSiteUrl();
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Contact", path: "/contact" },
+  ]);
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${siteUrl}/contact#contact`,
+    name: "Contact Arjun Industries",
+    description: content.contact.subtitle,
+    url: `${siteUrl}/contact`,
+    mainEntity: {
+      "@id": `${siteUrl}/#localbusiness`,
+    },
+  };
 
   return (
     <main className="theme-purple bg-stone-50 text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(contactPageSchema),
+        }}
+      />
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
@@ -147,6 +177,5 @@ export default async function ContactPage() {
     </main>
   );
 }
-
 
 

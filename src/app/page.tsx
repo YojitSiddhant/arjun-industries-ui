@@ -6,7 +6,7 @@ import { FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { getContent, getContentVersion } from "@/lib/content";
 import { toPhoneHref, toWhatsAppHref } from "@/lib/format";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildPageMetadata, getSiteUrl } from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "Welding, Metal and Fabrication Services in Bhopal",
@@ -19,6 +19,8 @@ export const metadata = buildPageMetadata({
     "custom metal work",
     "farm equipment repair",
   ],
+  image: "/uploads/upload-1774696291895-oqdidjo2amd.webp",
+  imageAlt: "Heavy-duty shed and metal fabrication work in Bhopal",
 });
 
 const quickStatIcons = [
@@ -74,9 +76,40 @@ export default async function Home() {
   const assetVersion = await getContentVersion();
   const phoneHref = toPhoneHref(content.contact.phone);
   const whatsappHref = toWhatsAppHref(content.contact.whatsapp);
+  const siteUrl = getSiteUrl();
+  const breadcrumbSchema = buildBreadcrumbSchema([{ name: "Home", path: "/" }]);
+  const homePageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteUrl}/#webpage`,
+    name: "Welding, Metal and Fabrication Services in Bhopal",
+    description: content.home.hero.subtitle,
+    url: siteUrl,
+    primaryImageOfPage: content.home.hero.slides[0]?.src
+      ? new URL(content.home.hero.slides[0].src, siteUrl).toString()
+      : undefined,
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#localbusiness`,
+    },
+  };
 
   return (
     <main className="theme-sky bg-stone-50 text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(homePageSchema),
+        }}
+      />
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
@@ -294,6 +327,5 @@ export default async function Home() {
     </main>
   );
 }
-
 
 

@@ -26,8 +26,14 @@ Required env vars:
 - `ADMIN_TOKEN`
 - `NEXT_PUBLIC_SITE_URL`
 
-Default admin password:
-- `123`
+Required on Vercel for persistent admin edits, enquiries, and image uploads:
+- `BLOB_READ_WRITE_TOKEN`
+
+Optional SEO/social env vars:
+- `NEXT_PUBLIC_FACEBOOK_URL`
+- `NEXT_PUBLIC_INSTAGRAM_URL`
+- `NEXT_PUBLIC_LINKEDIN_URL`
+- `NEXT_PUBLIC_GOOGLE_BUSINESS_URL`
 
 ## Local Run
 
@@ -58,42 +64,51 @@ What the admin panel updates:
 
 The website reads from the same files, so admin updates are reflected on the site.
 
-## Production Deployment
+## Vercel Deployment
 
-This project must be hosted as a real Node.js app.
+The public website is ready to deploy on Vercel as a Next.js app.
 
-Production commands:
+Recommended Vercel settings:
+- Framework Preset: `Next.js`
+- Build Command: `npm run build`
+- Install Command: `npm install`
+- Output Directory: leave empty
 
-```bash
-npm install
-npm run build
-npm run start
-```
+Set these environment variables in the Vercel project before production deploy:
+- `ADMIN_PASSWORD`
+- `ADMIN_TOKEN`
+- `NEXT_PUBLIC_SITE_URL`
 
-## Important Hosting Requirement
+For persistent admin edits, contact enquiries, and uploaded images, add a Vercel Blob store to the project and set:
+- `BLOB_READ_WRITE_TOKEN`
 
-The hosting environment must support persistent writable storage.
+Without `BLOB_READ_WRITE_TOKEN`, local development and Docker use the JSON files in this repository, but Vercel production should be treated as read-only for admin writes.
 
-Why:
+## Persistent Storage
+
+This project supports two storage modes:
+- Local/Docker: writes to `data/` and `public/uploads/`
+- Vercel: writes to Vercel Blob when `BLOB_READ_WRITE_TOKEN` is configured
+
+Persistent storage is needed because:
 - Admin content updates write to `data/siteContent.json`
 - Contact enquiries write to `data/enquiries.json`
 - Image uploads write to `public/uploads`
 
-If the server filesystem is read-only or temporary, admin changes will not persist after restart or redeploy.
+Vercel deployments do not persist runtime writes to the project filesystem, so production admin features should use Vercel Blob.
 
-Recommended hosting:
-- VPS
-- dedicated server
-- VM
-- Docker container with persistent mounted volumes
+To set up Vercel Blob:
+1. Open the Vercel project dashboard.
+2. Add a Blob store from Storage.
+3. Connect it to this project.
+4. Confirm `BLOB_READ_WRITE_TOKEN` exists in the project environment variables.
+5. Redeploy.
 
-Persist these folders in production:
-- `data/`
-- `public/uploads/`
+The first time Blob is enabled, the app falls back to the repository JSON seed content until admin changes or new enquiries are saved.
 
 ## Docker Deployment
 
-This repository includes a production-oriented Docker setup for the existing Next.js application.
+This repository also includes a production-oriented Docker setup for the existing Next.js application.
 
 ### Included files
 
@@ -162,6 +177,7 @@ Before going live, verify all of the following:
 - `/admin/login` opens correctly
 - admin login works with the configured password
 - editing content in admin updates the website
+- if deployed to Vercel, Vercel Blob is connected and `BLOB_READ_WRITE_TOKEN` is configured
 - uploading images in admin works
 - submitting the contact form creates a new enquiry
 - deleting an enquiry works

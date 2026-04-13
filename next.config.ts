@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         pathname: "/hero/**",
       },
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.public.blob.vercel-storage.com",
+      },
+    ],
   },
 };
 

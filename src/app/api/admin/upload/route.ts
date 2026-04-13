@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { getAdminToken } from "@/lib/adminAuth";
+import { hasBlobStorage, writePublicBlob } from "@/lib/storage";
 
 function isAuthorized(request: Request) {
   const cookieHeader = request.headers.get("cookie") ?? "";
@@ -32,6 +33,17 @@ export async function POST(request: Request) {
   const buffer = Buffer.from(arrayBuffer);
   const ext = sanitizeExt(file.name) || ".jpg";
   const filename = `upload-${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`;
+
+  if (hasBlobStorage()) {
+    const url = await writePublicBlob({
+      pathname: `uploads/${filename}`,
+      body: file,
+      contentType: file.type || undefined,
+    });
+
+    return NextResponse.json({ path: url });
+  }
+
   const uploadsDir = path.join(process.cwd(), "public", "uploads");
   await fs.mkdir(uploadsDir, { recursive: true });
   await fs.writeFile(path.join(uploadsDir, filename), buffer);

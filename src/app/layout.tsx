@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
-import { buildLocalBusinessSchema, buildPageMetadata, getSiteUrl } from "@/lib/seo";
+import {
+  buildLocalBusinessSchema,
+  buildPageMetadata,
+  buildWebsiteSchema,
+  getSiteUrl,
+} from "@/lib/seo";
 import "./globals.css";
 
 export const dynamic = "force-dynamic";
@@ -15,6 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | Arjun Industries",
     },
     applicationName: "Arjun Industries",
+    authors: [{ name: "Arjun Industries", url: siteUrl }],
     category: "Fabrication and welding services",
     referrer: "origin-when-cross-origin",
     creator: "Arjun Industries",
@@ -43,7 +49,15 @@ export async function generateMetadata(): Promise<Metadata> {
         "gate and grill work",
         "farm equipment fabrication",
       ],
+      image: "/uploads/upload-1774696291895-oqdidjo2amd.webp",
+      imageAlt: "Heavy-duty fabrication work by Arjun Industries in Bhopal",
     }),
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/favicon.ico",
+    },
+    manifest: "/manifest.webmanifest",
   };
 }
 
@@ -54,6 +68,7 @@ export default async function RootLayout({
 }>) {
   const content = await getContent();
   const localBusinessSchema = buildLocalBusinessSchema(content);
+  const websiteSchema = buildWebsiteSchema(content);
 
   return (
     <html lang="en">
@@ -64,6 +79,12 @@ export default async function RootLayout({
             __html: JSON.stringify(localBusinessSchema),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
         <div className="min-h-screen bg-stone-50 text-slate-800 flex flex-col smooth-fade">
           {children}
         </div>
@@ -71,5 +92,4 @@ export default async function RootLayout({
     </html>
   );
 }
-
 

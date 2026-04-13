@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { unstable_noStore as noStore } from "next/cache";
+import { hasBlobStorage, readJsonBlob, writeJsonBlob } from "@/lib/storage";
 
 export type SiteContent = {
   globals: {
@@ -64,6 +65,7 @@ export type SiteContent = {
 };
 
 const contentPath = path.join(process.cwd(), "data", "siteContent.json");
+const contentBlobPath = "data/siteContent.json";
 
 async function loadFileContent(): Promise<SiteContent> {
   const raw = await fs.readFile(contentPath, "utf-8");
@@ -77,15 +79,29 @@ async function saveFileContent(content: SiteContent): Promise<void> {
 
 export async function getContent(): Promise<SiteContent> {
   noStore();
+  const blobContent = await readJsonBlob<SiteContent>(contentBlobPath);
+  if (blobContent) {
+    return blobContent;
+  }
+
   return loadFileContent();
 }
 
 export async function getContentVersion(): Promise<string> {
   noStore();
+  if (hasBlobStorage()) {
+    return "blob";
+  }
+
   const stats = await fs.stat(contentPath);
   return `${stats.mtimeMs}`;
 }
 
 export async function saveContent(content: SiteContent): Promise<void> {
+  if (hasBlobStorage()) {
+    await writeJsonBlob(contentBlobPath, content);
+    return;
+  }
+
   await saveFileContent(content);
 }

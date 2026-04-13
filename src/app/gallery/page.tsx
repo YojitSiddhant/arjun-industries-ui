@@ -2,7 +2,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryClient from "@/components/GalleryClient";
 import { getContent, getContentVersion } from "@/lib/content";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  buildBreadcrumbSchema,
+  buildImageGallerySchema,
+  buildPageMetadata,
+} from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "Fabrication Project Gallery",
@@ -15,14 +19,33 @@ export const metadata = buildPageMetadata({
     "shed work images",
     "metal fabrication portfolio",
   ],
+  image: "/uploads/upload-1774696776900-py05x6ahve.webp",
+  imageAlt: "Arjun Industries fabrication project gallery",
 });
 
 export default async function GalleryPage() {
   const content = await getContent();
   const assetVersion = await getContentVersion();
+  const breadcrumbSchema = buildBreadcrumbSchema([
+    { name: "Home", path: "/" },
+    { name: "Gallery", path: "/gallery" },
+  ]);
+  const imageGallerySchema = buildImageGallerySchema(content);
 
   return (
     <main className="theme-rose bg-stone-50 text-slate-800">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(imageGallerySchema),
+        }}
+      />
       <Navbar
         businessName={content.globals.businessName}
         logoPath={content.globals.logoNavbar}
@@ -59,6 +82,5 @@ export default async function GalleryPage() {
     </main>
   );
 }
-
 
 
