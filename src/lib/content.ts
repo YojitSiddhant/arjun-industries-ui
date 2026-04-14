@@ -3,6 +3,7 @@ import path from "path";
 import { unstable_noStore as noStore } from "next/cache";
 import {
   assertWritableStorage,
+  getLatestBlobPath,
   hasBlobStorage,
   readJsonBlob,
   writeJsonBlob,
@@ -71,6 +72,7 @@ export type SiteContent = {
 
 const contentPath = path.join(process.cwd(), "data", "siteContent.json");
 const contentBlobPath = "data/siteContent.json";
+const contentBlobPrefix = "data/siteContent-";
 
 async function loadFileContent(): Promise<SiteContent> {
   const raw = await fs.readFile(contentPath, "utf-8");
@@ -84,6 +86,14 @@ async function saveFileContent(content: SiteContent): Promise<void> {
 
 export async function getContent(): Promise<SiteContent> {
   noStore();
+  const latestBlobPath = await getLatestBlobPath(contentBlobPrefix);
+  if (latestBlobPath) {
+    const latestContent = await readJsonBlob<SiteContent>(latestBlobPath);
+    if (latestContent) {
+      return latestContent;
+    }
+  }
+
   const blobContent = await readJsonBlob<SiteContent>(contentBlobPath);
   if (blobContent) {
     return blobContent;
@@ -95,7 +105,7 @@ export async function getContent(): Promise<SiteContent> {
 export async function getContentVersion(): Promise<string> {
   noStore();
   if (hasBlobStorage()) {
-    return "blob";
+    return (await getLatestBlobPath(contentBlobPrefix)) ?? "blob";
   }
 
   const stats = await fs.stat(contentPath);
@@ -104,7 +114,7 @@ export async function getContentVersion(): Promise<string> {
 
 export async function saveContent(content: SiteContent): Promise<void> {
   if (hasBlobStorage()) {
-    await writeJsonBlob(contentBlobPath, content);
+    await writeJsonBlob(`${contentBlobPrefix}${Date.now()}.json`, content);
     return;
   }
 

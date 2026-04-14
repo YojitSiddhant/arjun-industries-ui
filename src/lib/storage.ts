@@ -1,4 +1,4 @@
-import { get, put } from "@vercel/blob";
+import { get, list, put } from "@vercel/blob";
 
 const missingBlobMessage =
   "Production admin saves need Vercel Blob. Add BLOB_READ_WRITE_TOKEN to this Vercel project, redeploy, and try again.";
@@ -65,6 +65,19 @@ export async function readJsonBlob<T>(pathname: string): Promise<T | null> {
 
   const raw = await new Response(result.stream).text();
   return JSON.parse(raw) as T;
+}
+
+export async function getLatestBlobPath(prefix: string): Promise<string | null> {
+  if (!hasBlobStorage()) {
+    return null;
+  }
+
+  const result = await list({ prefix, limit: 100 }).catch(() => null);
+  const latest = result?.blobs
+    .filter((blob) => blob.pathname.endsWith(".json"))
+    .sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime())[0];
+
+  return latest?.pathname ?? null;
 }
 
 export async function writeJsonBlob(pathname: string, value: unknown): Promise<void> {
