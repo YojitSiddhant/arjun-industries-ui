@@ -49,10 +49,15 @@ export async function readJsonBlob<T>(pathname: string): Promise<T | null> {
     return null;
   }
 
-  const result = await get(pathname, {
-    access: "private",
-    useCache: false,
-  });
+  let result: Awaited<ReturnType<typeof get>>;
+  try {
+    result = await get(pathname, {
+      access: "private",
+      useCache: false,
+    });
+  } catch {
+    return null;
+  }
 
   if (!result || result.statusCode !== 200 || !result.stream) {
     return null;
