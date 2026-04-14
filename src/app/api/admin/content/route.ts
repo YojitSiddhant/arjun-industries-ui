@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getAdminToken } from "@/lib/adminAuth";
 import { getContent, saveContent } from "@/lib/content";
+import { getStorageErrorMessage } from "@/lib/storage";
 
 function isAuthorized(request: Request) {
   const cookieHeader = request.headers.get("cookie") ?? "";
@@ -27,7 +28,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Invalid payload." }, { status: 400 });
   }
 
-  await saveContent(body);
+  try {
+    await saveContent(body);
+  } catch (error) {
+    return NextResponse.json(
+      { message: getStorageErrorMessage(error) },
+      { status: 500 }
+    );
+  }
 
   revalidatePath("/");
   revalidatePath("/about");

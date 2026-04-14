@@ -1,7 +1,47 @@
 import { get, put } from "@vercel/blob";
 
+const missingBlobMessage =
+  "Production admin saves need Vercel Blob. Add BLOB_READ_WRITE_TOKEN to this Vercel project, redeploy, and try again.";
+
+export class StorageConfigurationError extends Error {
+  constructor(message = missingBlobMessage) {
+    super(message);
+    this.name = "StorageConfigurationError";
+  }
+}
+
 export function hasBlobStorage(): boolean {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}
+
+export function isVercelRuntime(): boolean {
+  return Boolean(process.env.VERCEL);
+}
+
+export function assertWritableStorage(): void {
+  if (isVercelRuntime() && !hasBlobStorage()) {
+    throw new StorageConfigurationError();
+  }
+}
+
+export function getStorageErrorMessage(
+  error: unknown,
+  fallback = "Could not save content."
+): string {
+  if (error instanceof StorageConfigurationError) {
+    return error.message;
+  }
+
+  if (
+    error &&
+    typeof error === "object" &&
+    "code" in error &&
+    error.code === "EROFS"
+  ) {
+    return missingBlobMessage;
+  }
+
+  return fallback;
 }
 
 export async function readJsonBlob<T>(pathname: string): Promise<T | null> {

@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 import { getAdminToken } from "@/lib/adminAuth";
-import { hasBlobStorage, writePublicBlob } from "@/lib/storage";
+import {
+  assertWritableStorage,
+  getStorageErrorMessage,
+  hasBlobStorage,
+  writePublicBlob,
+} from "@/lib/storage";
 
 function isAuthorized(request: Request) {
   const cookieHeader = request.headers.get("cookie") ?? "";
@@ -42,6 +47,15 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ path: url });
+  }
+
+  try {
+    assertWritableStorage();
+  } catch (error) {
+    return NextResponse.json(
+      { message: getStorageErrorMessage(error, "Upload failed.") },
+      { status: 500 }
+    );
   }
 
   const uploadsDir = path.join(process.cwd(), "public", "uploads");

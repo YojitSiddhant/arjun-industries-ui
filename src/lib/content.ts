@@ -1,7 +1,12 @@
 import fs from "fs/promises";
 import path from "path";
 import { unstable_noStore as noStore } from "next/cache";
-import { hasBlobStorage, readJsonBlob, writeJsonBlob } from "@/lib/storage";
+import {
+  assertWritableStorage,
+  hasBlobStorage,
+  readJsonBlob,
+  writeJsonBlob,
+} from "@/lib/storage";
 
 export type SiteContent = {
   globals: {
@@ -103,5 +108,6 @@ export async function saveContent(content: SiteContent): Promise<void> {
     return;
   }
 
+  assertWritableStorage();
   await saveFileContent(content);
 }

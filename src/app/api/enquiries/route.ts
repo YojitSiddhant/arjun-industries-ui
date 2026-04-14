@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { addEnquiry } from "@/lib/enquiries";
+import { getStorageErrorMessage } from "@/lib/storage";
 
 type EnquiryPayload = {
   name?: string;
@@ -19,13 +20,20 @@ export async function POST(request: Request) {
     );
   }
 
-  const enquiry = await addEnquiry({
-    name: body.name.trim(),
-    phone: body.phone.trim(),
-    projectType: body.projectType.trim(),
-    location: body.location?.trim() ?? "",
-    message: body.message?.trim() ?? "",
-  });
+  try {
+    const enquiry = await addEnquiry({
+      name: body.name.trim(),
+      phone: body.phone.trim(),
+      projectType: body.projectType.trim(),
+      location: body.location?.trim() ?? "",
+      message: body.message?.trim() ?? "",
+    });
 
-  return NextResponse.json({ ok: true, enquiry });
+    return NextResponse.json({ ok: true, enquiry });
+  } catch (error) {
+    return NextResponse.json(
+      { message: getStorageErrorMessage(error, "Could not submit enquiry.") },
+      { status: 500 }
+    );
+  }
 }

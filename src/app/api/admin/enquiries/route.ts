@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminToken } from "@/lib/adminAuth";
 import { getEnquiries, removeEnquiry } from "@/lib/enquiries";
+import { getStorageErrorMessage } from "@/lib/storage";
 
 function isAuthorized(request: Request) {
   const cookieHeader = request.headers.get("cookie") ?? "";
@@ -28,7 +29,15 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ message: "Invalid enquiry id." }, { status: 400 });
   }
 
-  const removed = await removeEnquiry(id);
+  let removed = false;
+  try {
+    removed = await removeEnquiry(id);
+  } catch (error) {
+    return NextResponse.json(
+      { message: getStorageErrorMessage(error, "Could not delete enquiry.") },
+      { status: 500 }
+    );
+  }
 
   if (!removed) {
     return NextResponse.json({ message: "Enquiry not found." }, { status: 404 });

@@ -1,7 +1,12 @@
 import fs from "fs/promises";
 import path from "path";
 import { unstable_noStore as noStore } from "next/cache";
-import { hasBlobStorage, readJsonBlob, writeJsonBlob } from "@/lib/storage";
+import {
+  assertWritableStorage,
+  hasBlobStorage,
+  readJsonBlob,
+  writeJsonBlob,
+} from "@/lib/storage";
 
 export type Enquiry = {
   id: string;
@@ -57,6 +62,7 @@ export async function addEnquiry(
   if (hasBlobStorage()) {
     await writeJsonBlob(enquiriesBlobPath, next);
   } else {
+    assertWritableStorage();
     await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
   }
 
@@ -74,6 +80,7 @@ export async function removeEnquiry(id: string): Promise<boolean> {
   if (hasBlobStorage()) {
     await writeJsonBlob(enquiriesBlobPath, next);
   } else {
+    assertWritableStorage();
     await fs.writeFile(enquiriesPath, JSON.stringify(next, null, 2), "utf-8");
   }
 
