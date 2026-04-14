@@ -52,7 +52,7 @@ export async function readJsonBlob<T>(pathname: string): Promise<T | null> {
   let result: Awaited<ReturnType<typeof get>>;
   try {
     result = await get(pathname, {
-      access: "private",
+      access: "public",
       useCache: false,
     });
   } catch {
@@ -69,7 +69,7 @@ export async function readJsonBlob<T>(pathname: string): Promise<T | null> {
 
 export async function writeJsonBlob(pathname: string, value: unknown): Promise<void> {
   await put(pathname, JSON.stringify(value, null, 2), {
-    access: "private",
+    access: "public",
     allowOverwrite: true,
     contentType: "application/json",
     cacheControlMaxAge: 60,
